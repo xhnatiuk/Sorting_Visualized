@@ -58,11 +58,20 @@ class TestDecreasing:
 class TestNearlySorted:
     def test_empty(self):
         empty(generate_nearly_sorted)
+    
+    def test_zero_height(self):
+        zero_height(generate_nearly_sorted)
 
 class TestFewUniques:
     def test_empty(self):
         empty(generate_few_unique)
 
+    def test_zero_height(self):
+        zero_height(generate_few_unique)
+
 class TestPseudorandom:
     def test_empty(self):
         empty(generate_random)
+
+    def test_zero_height(self):
+        zero_height(generate_random)
