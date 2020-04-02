@@ -7,16 +7,16 @@ General Idea:
 swtich statement based on cli to decide sorting strategy. GifGenerator class has field of sorter interface. Sorting algorithms are concrete implementations of sorting interface. 
 
 Premade Cases:
--(Psuedo)Random (rand)
--Nearly Sorted  (near)
--Increasing     (inc)
--Decreasing     (dec)
--Few Unique     (few)
+-Increasing     (i)
+-Decreasing     (d)
+-(Psuedo)Random (r)
+-Few Unique     (f)
+-Nearly Sorted  (n)
 
 Premade Problem Sizes:
 -10 (s)
 -25 (m)
--30 (l)
+-50 (l)
 
 ## Sorting Algorithms
 1. Do a little write up on each sort
