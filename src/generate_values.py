@@ -73,7 +73,12 @@ def generate_few_unique(quantity, maximum):
     Returns:
         values(List[int]): a list of integers with many repeated values.
     """
-    possible_values = [maximum, maximum/2, maximum/3, maximum/4]
+    val1 = maximum
+    val2 = math.floor(maximum/2)
+    val3 = math.floor(maximum/3)
+    val4 = math.floor(maximum/4)
+    val5 = 0
+    possible_values = [val1, val2, val3, val4, val5]
     return random.choices(possible_values, k=quantity)
 
 def generate_random(quantity, maximum):
