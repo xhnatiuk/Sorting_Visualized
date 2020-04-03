@@ -1,39 +1,32 @@
 import sys
 import math
-from src.calculate_values import get_values
 from PIL import Image, ImageDraw
 
-BORDER_WIDTH = 5
-COLUMN_WIDTH = 10
+# allows for easy extendability for user input by evaluating the length of their input
+def calculate_column_size(num_cols, width):
+    """
+    Calculates the largest possible column size. 
 
+    Args:
+        nums_cols (int): the number of columns to be drawn
+        width (int): the width of the drawing range
 
-# This probably belongs in another file that is a logic module
-# and not a drawing module
+    Returns:
+        column_size (int): the width of a column
+    """
 
-#TODO: allow users to generate graphs with custom number of columns
-# calculated using num*2*10
-def get_image_size(size):
-    switcher = {
-        "s": 300,
-        "m": 600,
-        "l": 1200,
-    }
+def draw_border(image, draw, border_width):
+    """
+    Draws a border onto the image
 
-# numbers generated may be equal to graph size, when drawing range
-# it is  likely 0 to graphsize-1. 
-def draw_graph(size, case):
-    background_color = (225, 225, 225, 1)
-    size = get_image_size(size)
-    num_columns = math.floor((size/COLUMN_WIDTH)/2)
-    case = get_values(case, num_columns, size - (2*BORDER_WIDTH))
-    graph = PIL.Image.new("RGBA", size, background_color)
-    draw = ImageDraw.Draw(graph)
-    draw_border(graph)
-    draw_bars(graph)
-    graph.save(sys.stdout, "graph.png")
-
-def draw_border(image):
-    draw = ImageDraw.Draw(image)
+    Args:
+        image (Image): the image to be drawn onto
+        draw (ImageDraw): the drawing object
+        border-width (int): weight of the image's border
+        
+    TODO: 
+        * determine how to write that it modifies the image
+    """
     width = image.width
     height = image.height
     border_color = (0, 0, 0, 1)
@@ -43,18 +36,47 @@ def draw_border(image):
     right_coords = [(width, 0),(width, height)]
     border_coords = [top_coords, bottom_coords, left_coords, right_coords]
     for coordinates in border_coords:
-      draw.line(coordinates, fill=border_color, width=BORDER_WIDTH)
+      draw.line(coordinates, fill=border_color, width=border_width)
 
 # pointer color (243, 33, 45, 0)
 # finished sorting color (33, 45, 243)
-def draw_bars(image, values):
-    draw = ImageDraw.Draw(image)
+def draw_bars(values, image, draw, border_width):
+    """
+    Draws a column for each value onto the image
+    Args:
+        values(List[int]): the values to be drawn
+        image (Image): the image to be drawn onto
+        draw (ImageDraw): the drawing object
+        border-width (int): weight of the image's border
+
+    TODO: 
+        * determine how to write that it modifies the image & that it expects nothing
+          to be outside of the drawing range because it will not scale the values.
+    """
     width = image.width
     height = image.height
+    num_columns = len(values)
     bar_color = (33, 150, 243, 0)
-    bar_base_height = height - BORDER_WIDTH
-    x_coord = BORDER_WIDTH +1
+    bar_base_height = height - border_width
+    x_coord = border_width + 1
     for val in values:
-# TODO: fill out pre/post conditions for everything
-# to ensure that this is never passed a value that is
-# greater than the drawing range i.e. border to border.
+
+# numbers generated may be equal to graph size, when drawing range
+# it is  likely 0 to graphsize-1. 
+def draw_graph(values, img_size, border_width):
+    """
+    Draws a graph
+    Args:
+        values(List[int]): a list of values
+        size (int): height and width of image in pixels
+        border-width (int): weight of the image's border
+
+    TODO: 
+        * determine what this returns
+    """
+    background_color = (225, 225, 225, 1)
+    graph = PIL.Image.new("RGBA", img_size, background_color)
+    draw = ImageDraw.Draw(graph, draw)
+    draw_border(graph, draw, border_width)
+    draw_bars(values, graph, draw, border_width)
+    graph.save(sys.stdout, "graph.png")
