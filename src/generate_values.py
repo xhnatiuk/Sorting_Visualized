@@ -19,12 +19,25 @@ def generate_increasing(quantity, maximum):
     Returns:
         values(List[int]): a increasing list of integers.
     """
-    values = []
-    minimum = maximum - (quantity - 1)
-    for x in range(quantity):
-        value = max(minimum+x, 0)
-        values.append(value)
-    return values
+    if quantity == 0:
+        return []
+    else:
+        values = []
+        step_amount = 1
+        # if more values than numbers initialize value to negative to generate 0s
+        if (maximum - quantity) < 0:
+            value = maximum - (quantity - 1)
+        # otherwise calculate the difference between values to spread entire range
+        else:
+            step_amount = math.floor(maximum/quantity)
+            value = step_amount
+        for x in range(quantity):
+            if (value < 0):
+                values.append(0)
+            else:
+                values.append(value)
+            value = value + step_amount
+        return values
 
 def generate_decreasing(quantity, maximum):
     """
@@ -51,16 +64,21 @@ def generate_nearly_sorted(quantity, maximum):
     Returns:
         values(List[int]): a nearly sorted list of integers.
     """
-    modifications = [-2, -1, 0, 1, 2]
-    mod_weights = [7, 14, 68, 14, 7]
-    values = generate_increasing(quantity, maximum)
-    for x in range(quantity):
-        modifier = random.choices(modifications, weights=mod_weights)[0]
-        value = values[x] + modifier
-        value = max(0, value)
-        value = min(value, maximum)
-        values[x] = value
-    return values
+    if quantity == 0:
+        return []
+    else:
+        values = generate_increasing(quantity, maximum)
+        # calculate the difference between values and use it to create modifications
+        step = max(1, math.floor(maximum/quantity))
+        modifications = [-2*step, 0, 2*step]
+        mod_weights = [21, 58, 21]
+        for x in range(quantity):
+            modifier = random.choices(modifications, weights=mod_weights)[0]
+            value = values[x] + modifier
+            value = max(0, value)
+            value = min(value, maximum)
+            values[x] = value
+        return values
 
 def generate_few_unique(quantity, maximum):
     """
@@ -99,7 +117,7 @@ def generate_random(quantity, maximum):
     return values
 
 def generate_values(case, quantity, maximum):
-     """
+    """
     Generates a list of quantity integers, between 0 and maximum inclusive, following a pattern.
 
     Args:
@@ -110,7 +128,7 @@ def generate_values(case, quantity, maximum):
     Returns:
         values(List[int]): a list of integers.
     """
-     switcher = {
+    switcher = {
         "i": generate_increasing(quantity, maximum),
         "d": generate_decreasing(quantity, maximum),
         "r": generate_random(quantity, maximum),
