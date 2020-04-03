@@ -1,70 +1,60 @@
+import sys
 import math
-import random
-from PIL import Image
+from src.calculate_values import get_values
+from PIL import Image, ImageDraw
 
-SIZE_SMALL = 250
-SIZE_MEDIUM = 500
-SIZE_LARGE = 1000
-COLUMN_SIZE = 10
-BACKGROUND_COLOR = (225, 225, 225, 1)
+BORDER_WIDTH = 5
+COLUMN_WIDTH = 10
 
+
+# This probably belongs in another file that is a logic module
+# and not a drawing module
+
+#TODO: allow users to generate graphs with custom number of columns
+# calculated using num*2*10
 def get_image_size(size):
     switcher = {
-        "s": SIZE_SMALL,
-        "m": SIZE_MEDIUM,
-        "l": SIZE_LARGE,
+        "s": 300,
+        "m": 600,
+        "l": 1200,
     }
-
-def get_values(case, num_values, max_value):
-    switcher = {
-        "i": generate_increasing(num_values, max_value),
-        "d": generate_decreasing(num_values, max_value),
-        "r": generate_random(num_values, max_value),
-        "f": generate_few_unique(num_values, max_value),
-        "n": generate_nearly_sorted(num_values, max_value),
-    }
-
-def generate_increasing(num_values, max_value):
-    values = []
-    min_value = max_value - (num_values - 1)
-    for x in range(num_values):
-        value = max(min_value+x, 0)
-        values.append(value)
-    return values
-
-def generate_decreasing(num_values, max_value):
-    values = generate_increasing(num_values, max_value)
-    return values[::-1]
-
-def generate_nearly_sorted(num_values, max_value):
-    modifications = [-2, -1, 0, 1, 2]
-    mod_weights = [7, 14, 68, 14, 7]
-    values = generate_increasing(num_values, max_value)
-    for x in range(num_values):
-        modifier = random.choices(modifications, weights = mod_weights)[0]
-        new_value = values[x] + modifier
-        new_value = max(0, new_value)
-        new_value = min(new_value, max_value)
-        values[x] = new_value
-    return values
-
-def generate_few_unique(num_values, max_value):
-    possible_values = [max_value, max_value/2, max_value/3, max_value/4]
-    return random.choices(possible_values, k = num_values)
-
-def generate_random(num_values, max_value):
-    values = []
-    for col in range(num_values):
-        new_value = random.randint(0, max_value)
-        values.append(new_value)
-    return values
-
 
 # numbers generated may be equal to graph size, when drawing range
-# is likely 0 to graphsize-1. 
+# it is  likely 0 to graphsize-1. 
 def draw_graph(size, case):
+    background_color = (225, 225, 225, 1)
     size = get_image_size(size)
-    num_columns = math.floor((size/COLUMN_SIZE)/2)
-    case = get_values(case, num_columns, size)
-    graph = PIL.Image.new("RGBA", size, BACKGROUND_COLOR)
-# TODO: draw graphs
+    num_columns = math.floor((size/COLUMN_WIDTH)/2)
+    case = get_values(case, num_columns, size - (2*BORDER_WIDTH))
+    graph = PIL.Image.new("RGBA", size, background_color)
+    draw = ImageDraw.Draw(graph)
+    draw_border(graph)
+    draw_bars(graph)
+    graph.save(sys.stdout, "graph.png")
+
+def draw_border(image):
+    draw = ImageDraw.Draw(image)
+    width = image.width
+    height = image.height
+    border_color = (0, 0, 0, 1)
+    top_coords = [(0,0), (width, 0)]
+    bottom_coords = [(0, height), (width, height)]
+    left_coords = [(0, 0), (0, height)]
+    right_coords = [(width, 0),(width, height)]
+    border_coords = [top_coords, bottom_coords, left_coords, right_coords]
+    for coordinates in border_coords:
+      draw.line(coordinates, fill=border_color, width=BORDER_WIDTH)
+
+# pointer color (243, 33, 45, 0)
+# finished sorting color (33, 45, 243)
+def draw_bars(image, values):
+    draw = ImageDraw.Draw(image)
+    width = image.width
+    height = image.height
+    bar_color = (33, 150, 243, 0)
+    bar_base_height = height - BORDER_WIDTH
+    x_coord = BORDER_WIDTH +1
+    for val in values:
+# TODO: fill out pre/post conditions for everything
+# to ensure that this is never passed a value that is
+# greater than the drawing range i.e. border to border.
