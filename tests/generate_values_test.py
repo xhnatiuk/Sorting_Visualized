@@ -1,4 +1,4 @@
-import src
+from typing import List, Callable
 from src.generate_values import *
 
 
@@ -7,31 +7,31 @@ from src.generate_values import *
 # also how do I/python know if its an integer since to type???
 # check bounds on loops obvi
 
-def simple(generator, expected):
+def simple(generator: Callable[[int, int], List[int]], expected: List[int]):
     actual = generator(5, 5)
     assert actual == expected
 
-def duplicate_maximums(generator, expected):
+def duplicate_maximums(generator: Callable[[int, int], List[int]], expected: List[int]):
     actual = generator (5, 11)
     assert actual == expected
 
-def duplicate_zeros(generator, expected):
+def duplicate_zeros(generator: Callable[[int, int], List[int]], expected: List[int]):
     actual = generator(5, 2)
     assert actual == expected
     
-def empty(generator):
+def empty(generator: Callable[[int, int], List[int]]):
     expected = []
     actual = generator(0, 5)
     assert actual == expected
 
-def zero_height(generator):
+def zero_height(generator: Callable[[int, int], List[int]]):
     expected = [0, 0, 0, 0, 0]
     actual = generator(5, 0)
     assert actual == expected
 
 # test does not assert anything because results are unpredictable
 # just makes sure code can run
-def big(generator, expected):
+def big(generator: Callable[[int, int], List[int]], expected: List[int]):
     actual = generator (20, 100)
     # uncomment to view test results of generators with unpredictable results
     # assert actual == expected

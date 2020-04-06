@@ -1,14 +1,8 @@
 import math
 import random
+from typing import List
 
-#TODO: values calculated are going to be bad using this method...
-# on graph size 1000 with 50 columns they will be hiehgts 950 through
-# 1000. Fix so that they step down by a reasonable amount. Maybe
-# make it always go to 0 for inc/dec and step down by amount
-# that makes that possible. Nearly sorted will have to add that
-# amount and random/few unique can ignore it.
-
-def generate_increasing(quantity, maximum):
+def generate_increasing(quantity: int, maximum: int) -> List[int]:
     """
     Generates an increasing list of quantity integers between 0 and maximum inclusive.
 
@@ -39,7 +33,7 @@ def generate_increasing(quantity, maximum):
             value = value + step_amount
         return values
 
-def generate_decreasing(quantity, maximum):
+def generate_decreasing(quantity: int, maximum: int) -> List[int]:
     """
     Generates an decreasing list of quantity integers between 0 and maximum inclusive.
 
@@ -53,7 +47,7 @@ def generate_decreasing(quantity, maximum):
     values = generate_increasing(quantity, maximum)
     return values[::-1]
 
-def generate_nearly_sorted(quantity, maximum):
+def generate_nearly_sorted(quantity: int, maximum: int) -> List[int]:
     """
     Generates a nearly sorted list of quantity integers between 0 and maximum inclusive.
 
@@ -80,7 +74,7 @@ def generate_nearly_sorted(quantity, maximum):
             values[x] = value
         return values
 
-def generate_few_unique(quantity, maximum):
+def generate_few_unique(quantity: int, maximum: int) -> List[int]:
     """
     Generates an list of quantity integers, between 0 and maximum inclusive, with few unique values.
 
@@ -99,7 +93,7 @@ def generate_few_unique(quantity, maximum):
     possible_values = [val1, val2, val3, val4, val5]
     return random.choices(possible_values, k=quantity)
 
-def generate_random(quantity, maximum):
+def generate_random(quantity: int, maximum: int) -> List[int]:
     """
     Generates a random list of quantity integers between 0 and maximum inclusive.
 
@@ -116,7 +110,7 @@ def generate_random(quantity, maximum):
         values.append(value)
     return values
 
-def generate_values(case, quantity, maximum):
+def generate_values(case: str, quantity: int, maximum: int) -> List[int]:
     """
     Generates a list of quantity integers, between 0 and maximum inclusive, following a pattern.
 

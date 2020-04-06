@@ -4,7 +4,7 @@ from typing import List
 from PIL import Image, ImageDraw
 from src.exceptions import InputError
 
-def draw_border(image: Image, draw: ImageDraw, border_width: int):
+def draw_border(image: Image, draw: ImageDraw, border_width: int) -> None:
     """
     Draws a 50% border color border onto the image. Leaves the other half as background color.
 
@@ -15,6 +15,9 @@ def draw_border(image: Image, draw: ImageDraw, border_width: int):
         
     Modifies:
         image
+
+    Returns:
+        None
 
     Notes:
         non-even values for border_width do not draw balanced borders
@@ -32,7 +35,7 @@ def draw_border(image: Image, draw: ImageDraw, border_width: int):
 
 # pointer color (243, 33, 45, 0)
 # finished sorting color (33, 45, 243)
-def draw_bars(values: List[int], image: Image, draw: ImageDraw, border_width: int):
+def draw_bars(values: List[int], image: Image, draw: ImageDraw, border_width: int) -> None:
     """
     Draws a bar for each value onto the image
     Args:
@@ -46,6 +49,9 @@ def draw_bars(values: List[int], image: Image, draw: ImageDraw, border_width: in
     
     Modifies:
         image
+
+    Returns:
+        None
 
     Notes:
         values greater than (height - 2*border_width) will be drawn over the border and
@@ -68,7 +74,7 @@ def draw_bars(values: List[int], image: Image, draw: ImageDraw, border_width: in
 
 # numbers generated may be equal to graph size, when drawing range
 # it is  likely 0 to graphsize-1.
-def draw_graph(values: List[int], img_size: int, border_width: int, file_path: str):
+def draw_graph(values: List[int], img_size: int, border_width: int, file_path: str) -> None:
     """
     Draws a graph
     Args:
@@ -77,11 +83,14 @@ def draw_graph(values: List[int], img_size: int, border_width: int, file_path: s
         border-width (int): weight of the image's border
         file_path (string): the path relative to ./out to save the graph to
 
-    Raise:
+    Raises:
         InputError: img_size < 1 OR len(value) < 1
 
     Modifies
         ./out
+
+    Returns:
+        None
     """
     if img_size < (1, 1):
         raise InputError(img_size, "image size cannot be less than 1")
