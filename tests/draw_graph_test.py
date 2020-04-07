@@ -2,6 +2,7 @@ from src.draw_graph import *
 from src.exceptions import InputError
 from tests.image_testing import assert_image_equal
 from typing import List
+from PIL import Image
 
 RELATIVE_FILEPATH = "images/tests/draw_graph/"
 OUTPUT_FILEPATH = "./out/" + RELATIVE_FILEPATH
