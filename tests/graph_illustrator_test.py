@@ -1,10 +1,15 @@
-from src.illustrator import Illustrator, ColorProfile
+from src.graph_illustrator import GraphIllustrator, ColorProfile
 from src.graph_generator import GraphGenerator
 from src.graph_strategy import GraphStrategy
 from src.exceptions import InputError
 from tests.image_testing import assert_image_equal
 from typing import List
 from PIL import Image, ImageDraw
+
+OUTPUT_FILEPATH = "./out/images/tests/graph_illustrator/"
+REFERENCE_FILEPATH = "./tests/images/graph_illustrator/"
+
+COLORS = ColorProfile((255, 255, 255, 255), (0, 0, 0, 255), (33, 150, 243, 255), (243, 33, 45, 255), (243, 33, 45, 255))
 
 def compare_images(fp_actual: str, fp_expected: str):
     actual = Image.open(fp_actual)
@@ -16,15 +21,14 @@ class MockGraphStrategy(GraphStrategy):
         return []
 
 class TestDrawGraph:
-    OUTPUT_FILEPATH = "./out/images/tests/illustrator/draw_graph/"
-    REFERENCE_FILEPATH = "./tests/images/illustrator/draw_graph/"
+   
 
-    COLORS = ColorProfile((255, 255, 255, 255), (0, 0, 0, 255), (33, 150, 243, 255), (243, 33, 45, 0))
+
         
     def draw_graph_test_helper(self, file_name: str, values: List[int], image_size: (int, int)):
-        fp_actual = self.OUTPUT_FILEPATH + file_name + ".png"
-        fp_expected = self.REFERENCE_FILEPATH + file_name + ".png"
-        illustrator = Illustrator(image_size, 10, self.COLORS)
+        fp_actual = OUTPUT_FILEPATH + "draw_graph/" + file_name + ".png"
+        fp_expected = REFERENCE_FILEPATH + "draw_graph/" + file_name + ".png"
+        illustrator = GraphIllustrator(len(values), image_size, 10, COLORS)
         graph_generator = GraphGenerator(MockGraphStrategy())
         graph =  graph_generator.create_graph_base(image_size[0], image_size[1], (255, 255, 255, 255))
         draw = ImageDraw.Draw(graph)
@@ -86,3 +90,19 @@ class TestDrawGraph:
         values = [730, 730, 730, 730, 730, 730, 730, 730, 730, 730]
         image_size = (750, 750)
         self.draw_graph_test_helper(file_name, values, image_size)
+
+
+def test_draw_cursor():
+    test_name = "draw_cursor_position_zero"
+    fp_actual = OUTPUT_FILEPATH + test_name + ".png"
+    fp_expected = REFERENCE_FILEPATH + test_name + ".png"
+    values = [230, 230, 230, 230, 230, 230, 230, 230, 230, 230]
+    image_size = (250, 250)
+    illustrator = GraphIllustrator(len(values), image_size, 10, COLORS)
+    graph_generator = GraphGenerator(MockGraphStrategy())
+    graph =  graph_generator.create_graph_base(image_size[0], image_size[1], (255, 255, 255, 255))
+    draw = ImageDraw.Draw(graph)
+    illustrator.draw_graph(values, draw)
+    illustrator.draw_cursor(0, draw, COLORS.cursor)
+    graph.save(fp_actual)
+    compare_images(fp_actual, fp_expected)

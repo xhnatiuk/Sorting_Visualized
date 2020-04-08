@@ -1,7 +1,7 @@
 from typing import List
 from PIL import Image, ImageDraw
 from src.graph_strategy import GraphStrategy
-from src.illustrator import Illustrator
+from src.graph_illustrator import GraphIllustrator
 from src.exceptions import InputError
 
 class GraphGenerator():
@@ -16,7 +16,7 @@ class GraphGenerator():
         self._strategy = strategy
      
 
-    def generate_graph(self, quantity: int, illustrator: Illustrator, file_path: str) -> None:
+    def generate_graph(self, quantity: int, illustrator: GraphIllustrator, file_path: str) -> None:
         """
         generates and saves an image of a graph
         

@@ -1,5 +1,5 @@
 from typing import List
-from src.illustrator import ColorProfile, Illustrator
+from src.graph_illustrator import ColorProfile, GraphIllustrator
 from src.graph_generator import GraphGenerator
 from src.graph_strategy import *
     
@@ -34,9 +34,9 @@ def select_color_profile(cp: str)-> ColorProfile:
     background_color = (255, 255, 225, 255)
     border_color = (0, 0, 0, 255)
     bar_color = (33, 150, 243, 255)
-    pointer_color = (243, 33, 45, 0)
+    cursor_color = (243, 33, 45, 0)
     sorted_color = (33, 45, 243)
-    return ColorProfile(background_color, border_color, bar_color, sorted_color, pointer_color)
+    return ColorProfile(background_color, border_color, bar_color, sorted_color, cursor_color)
 
 def select_graph_strategy(case: str) -> GraphStrategy:
     """
@@ -68,7 +68,9 @@ def handle_input(num_values: int, case: str, size: str, cp: str, file_path: str)
         file_path (string): the path relative to ./out to save the graph.
 
     Raises:
-        InputError: num_values < 1.
+        InputError: 
+            * num_values < 1.
+            * number of values is too large for the image size
 
     Returns:
         None.
@@ -76,7 +78,7 @@ def handle_input(num_values: int, case: str, size: str, cp: str, file_path: str)
     image_size = select_image_size(size)
     border_size = 10
     colors = select_color_profile(cp)
-    illustrator = Illustrator((image_size, image_size), border_size, colors)
+    illustrator = GraphIllustrator((num_values, image_size, image_size), border_size, colors)
     graph_strategy = select_graph_strategy(case)
     graph_generator = GraphGenerator(graph_strategy)
     graph_generator.generate_graph(num_values, illustrator, file_path)
