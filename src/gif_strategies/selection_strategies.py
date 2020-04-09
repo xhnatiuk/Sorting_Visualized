@@ -1,10 +1,10 @@
 from typing import List
-from src.sort_strategy import FrameStrategy, Step
+from src.gif_strategy import GifStrategy, Step
 
-class SelectionSort(FrameStrategy):
+class SelectionSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
-        Fufuills the FrameStrategy.generate_steps contract using Selection Sort
+        Fufuills the GifStrategy.generate_steps contract using Selection Sort
         """
 
         steps = []
@@ -19,38 +19,38 @@ class SelectionSort(FrameStrategy):
             steps.append(Step(i, (i ,minimum_index)))
         return steps
 
-class Heapsort(FrameStrategy):
+class Heapsort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
-        Fufuills the FrameStrategy.generate_steps contract using Heapsort
+        Fufuills the GifStrategy.generate_steps contract using Heapsort
         
         TODO: implement
         """
         return NotImplementedError
 
-class Smoothsort(FrameStrategy):
+class Smoothsort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
-        Fufuills the FrameStrategy.generate_steps contract using Smoothsort
+        Fufuills the GifStrategy.generate_steps contract using Smoothsort
 
         TODO: implement
         """
         return NotImplementedError
 
 
-class Strandsort(FrameStrategy):
+class Strandsort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
-        Fufuills the FrameStrategy.generate_steps contract using Strandsort
+        Fufuills the GifStrategy.generate_steps contract using Strandsort
 
         TODO: implement
         """
         return NotImplementedError
 
-class TournamentSort(FrameStrategy):
+class TournamentSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
-        Fufuills the FrameStrategy.generate_steps contract using Tournament Sort
+        Fufuills the GifStrategy.generate_steps contract using Tournament Sort
 
         TODO: implement
         """

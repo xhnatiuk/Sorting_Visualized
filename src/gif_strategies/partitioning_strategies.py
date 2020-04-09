@@ -1,28 +1,28 @@
 from typing import List
-from src.sort_strategy import FrameStrategy, Step
+from src.gif_strategy import GifStrategy, Step
 
-class Introsort(FrameStrategy):
+class Introsort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
-        Fufuills the FrameStrategy.generate_steps contract using Introsort
+        Fufuills the GifStrategy.generate_steps contract using Introsort
 
         TODO: implement
         """
         return NotImplementedError
 
-class Quicksort(FrameStrategy):
+class Quicksort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
-        Fufuills the FrameStrategy.generate_steps contract using Quicksort
+        Fufuills the GifStrategy.generate_steps contract using Quicksort
 
         TODO: implement
         """
         return NotImplementedError
 
-class Quicksort3(FrameStrategy):
+class Quicksort3(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
-        Fufuills the FrameStrategy.generate_steps contract using Quicksort3
+        Fufuills the GifStrategy.generate_steps contract using Quicksort3
 
         TODO: implement
         """

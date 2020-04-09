@@ -1,46 +1,46 @@
 from typing import List
-from src.sort_strategy import FrameStrategy, Step
+from src.gif_strategy import GifStrategy, Step
 
-class BubbleSort(FrameStrategy):
+class BubbleSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
-        Fufuills the FrameStrategy.generate_steps contract using Bubble Sort
+        Fufuills the GifStrategy.generate_steps contract using Bubble Sort
 
         TODO: implement
         """
         return NotImplementedError
 
-class CocktailSort(FrameStrategy):
+class CocktailSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
-        Fufuills the FrameStrategy.generate_steps contract using Cocktail Sort
+        Fufuills the GifStrategy.generate_steps contract using Cocktail Sort
 
         TODO: implement
         """
         return NotImplementedError
 
-class CombSort(FrameStrategy):
+class CombSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
-        Fufuills the FrameStrategy.generate_steps contract using Comb Sort
+        Fufuills the GifStrategy.generate_steps contract using Comb Sort
 
         TODO: implement
         """
         return NotImplementedError
 
-class GnomeSort(FrameStrategy):
+class GnomeSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
-        Fufuills the FrameStrategy.generate_steps contract using Gnome Sort
+        Fufuills the GifStrategy.generate_steps contract using Gnome Sort
 
         TODO: implement
         """
         return NotImplementedError
 
-class OddEvenSort(FrameStrategy):
+class OddEvenSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
-        Fufuills the FrameStrategy.generate_steps contract using Odd-Even Sort
+        Fufuills the GifStrategy.generate_steps contract using Odd-Even Sort
 
         TODO: implement
         """

@@ -1,5 +1,6 @@
 .vscode/
 env/
 .pytest_cache/
-*/__pycache__/
+*/__pycache__
+src/gif_strategies/__pycache__
 out/images/tests/*
