@@ -110,7 +110,7 @@ class GraphIllustrator:
         Returns:
             None.
         """
-        draw_cursor(self, position, draw, self.colors.background)
+        self.draw_cursor(position, draw, self.colors.background)
 
     def draw_bar(self, position: int, value: int, draw: ImageDraw, color: (int, int, int, int)) -> None:
         """
@@ -163,7 +163,7 @@ class GraphIllustrator:
             None.
         """
         max_bar_val = self.image_height - 2*self.border_size
-        draw_bar(self, position, max_bar_val, draw, self.colors.background)
+        self.draw_bar(position, max_bar_val, draw, self.colors.background)
 
     def draw_bars(self, values: List[int], draw: ImageDraw) -> None:
         """

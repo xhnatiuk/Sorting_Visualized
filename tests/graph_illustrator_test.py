@@ -1,30 +1,20 @@
-from src.graph_illustrator import GraphIllustrator, ColorProfile
+from src.graph_illustrator import GraphIllustrator
 from src.graph_generator import GraphGenerator
 from src.graph_strategy import GraphStrategy
 from src.exceptions import InputError
-from tests.image_testing import assert_image_equal
+from tests.image_testing import compare_images, COLORS
 from typing import List
 from PIL import Image, ImageDraw
 
 OUTPUT_FILEPATH = "./out/images/tests/graph_illustrator/"
 REFERENCE_FILEPATH = "./tests/images/graph_illustrator/"
 
-COLORS = ColorProfile((255, 255, 255, 255), (0, 0, 0, 255), (33, 150, 243, 255), (243, 33, 45, 255), (243, 33, 45, 255))
-
-def compare_images(fp_actual: str, fp_expected: str):
-    actual = Image.open(fp_actual)
-    expected = Image.open(fp_expected)
-    assert_image_equal(actual, expected)
-
 class MockGraphStrategy(GraphStrategy):
     def generate_values(self, quantity: int, maximum: int) -> List[int]:
         return []
 
 class TestDrawGraph:
-   
-
-
-        
+       
     def draw_graph_test_helper(self, file_name: str, values: List[int], image_size: (int, int)):
         fp_actual = OUTPUT_FILEPATH + "draw_graph/" + file_name + ".png"
         fp_expected = REFERENCE_FILEPATH + "draw_graph/" + file_name + ".png"
