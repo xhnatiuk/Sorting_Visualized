@@ -1,4 +1,4 @@
-from src.gif_strategy import GifStrategy, Step
+from src.gif_strategy import GifStrategy, Step, Change
 from src.graph_illustrator import GraphIllustrator
 from typing import List
 from copy import copy, deepcopy
@@ -66,11 +66,11 @@ class GifGenerator():
 
     def generate_frame(self, values: List[int], step: Step, frame: Image) -> None:
         """
-        edits the image to display the changes in Step, performs any swaps on values
+        edits the image to display the changes in Step, performs any changes on values
 
         Args:
             values (List[int]): the list of values displayed in frame
-            step (Step): the new position for the cursor and possibly a swap of bars
+            step (Step): the new position for the cursor and cahnges (if any)
             frame (Image): the image to be edited
 
         Modifies:
@@ -82,15 +82,31 @@ class GifGenerator():
         """
         draw = ImageDraw.Draw(frame)
         self.illustrator.draw_cursor(step.position, draw, self.illustrator.colors.cursor)
-        if step.swap != None:
-            index_1 = step.swap[0]
-            index_2 = step.swap[1]
-            value_1 = values[index_1]
-            value_2 = values[index_2]
-            self.illustrator.erase_bar(index_1, draw)
-            self.illustrator.erase_bar(index_2, draw)
-            self.illustrator.draw_bar(index_1, value_2, draw, self.illustrator.colors.bar)
-            self.illustrator.draw_bar(index_2, value_1, draw, self.illustrator.colors.bar)
-            values[index_1] = value_2
-            values[index_2] = value_1
-            
+        if step.changes:
+            for change in step.changes:
+                involved = change.involved
+                if change.ctype == "s":
+                    self.apply_sort(values, involved, draw)
+                else:
+                    if change.ctype == "e":
+                        self.apply_exchange(values, involved, draw)
+                    else:
+                        if change.ctype == "m":
+                            self.apply_move(values, involved, draw)
+                    
+
+    def apply_exchange(self, values: List[int], involved: List[int], draw: ImageDraw) -> None:
+        index_1 = involved[0]
+        index_2 = involved[1]
+        value_1 = values[index_1]
+        value_2 = values[index_2]
+        self.illustrator.erase_bar(index_1, draw)
+        self.illustrator.erase_bar(index_2, draw)
+        self.illustrator.draw_bar(index_1, value_2, draw, self.illustrator.colors.bar)
+        self.illustrator.draw_bar(index_2, value_1, draw, self.illustrator.colors.bar)
+        values[index_1], values[index_2]= value_2, value_1
+
+    def apply_sort(self, values: List[int], involved: List[int], draw: ImageDraw) -> None:
+        for number in involved:
+            self.illustrator.draw_bar(number, values[number], draw, self.illustrator.colors.finished)
+

@@ -5,20 +5,20 @@ from typing import List
 from src.exceptions import InputError
 
 class ColorProfile:
-    def __init__(self, background, border, bar, sorted_, cursor):
+    def __init__(self, background, border, bar, finished, cursor):
         """
         Constructor for ColorProfile class.
 
         background (int, int, int, int): the RGBA color code for the background.
         border (int, int, int, int): the RGBA color code for the border.
         bar (int, int, int, int): the RGBA color code for the bar.
-        sorted_ (int, int, int, int): the RGBA color code for the sorted bars.
+        finished (int, int, int, int): the RGBA color code for the sorted bars.
         cursor (int, int, int, int): the RGBA color code for the cursor.
         """
         self.background = background
         self.border = border
         self.bar = bar
-        self.sorted = sorted_
+        self.finished = finished
         self.cursor = cursor
 
 class GraphIllustrator:

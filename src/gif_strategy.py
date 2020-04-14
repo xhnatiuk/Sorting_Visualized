@@ -1,23 +1,45 @@
 from abc import ABC, abstractmethod
 from typing import List
 
+class Change:
+    """
+    Class for defining changes that have taken place during sorting
+    ctypes: 
+        e: exchange
+        s: sort
+        m: move
+    """
+    ctype: str
+    involved: List[int]
+
+    def __init__(self, ctype: str, involved: List[int]):
+        """
+        Change class constructor
+
+        Args:
+            ctype (str): the type of change applied
+            involved (List[int]): indicies of values involved in the change
+        """
+        self.ctype = ctype
+        self.involved = involved 
+
 class Step:
     """
     Class for tracking steps taken in a sorting algorithm
     """
     position: int
-    swap: (int, int)
+    changes: List[Change]
 
-    def __init__(self, position: int, swap: (int, int) = None):
+    def __init__(self, position: int, changes: List[Change] = None):
         """
         Step class constructor
 
         Args:
             position (int): the index of the value being considered
-            swap ((int, int)): the indicies of the values swapped
+            changes (List[Change]): changes applied
         """
         self.position = position
-        self.swap = swap 
+        self.changes = changes 
 
 class GifStrategy(ABC):
     """
