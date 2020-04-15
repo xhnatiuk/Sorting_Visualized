@@ -5,7 +5,8 @@ from typing import List
 from src.exceptions import InputError
 
 class ColorProfile:
-    def __init__(self, background, border, bar, finished, cursor):
+    def __init__(self, background: (int, int, int, int), border: (int, int, int, int), 
+    bar: (int, int, int, int), finished: (int, int, int, int), cursor: (int, int, int, int)):
         """
         Constructor for ColorProfile class.
 
@@ -35,31 +36,10 @@ class GraphIllustrator:
         self.image_width = image_size[0]
         self.image_height = image_size[1]
         self.border_size = border_size
+        self.num_bars = num_bars
         self.bar_width = math.floor((self.image_width - 2*self.border_size)/(2*num_bars - 1))
         self.padding = (self.image_width - 2*self.border_size) - (self.bar_width*(2*num_bars -1))
         self.colors = colors
-
-
-    def draw_border(self, draw: ImageDraw) -> None:
-        """
-        Draws a 50% self._border_color border onto the image. Leaves the other half as self._background_color.
-
-        Args:
-            draw (ImageDraw): the drawing object.
-            
-        Modifies:
-            the Image pertaining to draw.
-
-        Returns:
-            None.
-        """
-        top_coords = [(0, 0), (self.image_width, 0)]
-        bottom_coords = [(0, self.image_height-1), (self.image_width, self.image_height-1)]
-        left_coords = [(0, 0), (0, self.image_height)]
-        right_coords = [(self.image_width-1, 0),(self.image_width-1, self.image_height)]
-        border_coords = [top_coords, bottom_coords, left_coords, right_coords]
-        for coordinates in border_coords:
-            draw.line(coordinates, fill=self.colors.border, width=self.border_size)
 
     def draw_cursor(self, position: int, draw: ImageDraw, color:(int, int, int, int)) -> None:
         """
@@ -76,6 +56,9 @@ class GraphIllustrator:
         Returns:
             None.
         """
+        if position < 0 or position > (self.num_bars - 1):
+            raise InputError((position), "invalid cursor position")
+
         cursor_width = self.bar_width
         x_start = self.border_size + math.ceil(self.padding/2)
         cursor_center = x_start + (2*self.bar_width)*position  + math.floor(self.bar_width/2)          
@@ -135,6 +118,11 @@ class GraphIllustrator:
             values greater than (height - 2*border_width) will be drawn over the border and
             capped at (height - border_width) since that is the uppermost edge of the image.
         """
+        if position < 0 or position > (self.num_bars - 1):
+            raise InputError((position), "invalid bar position")
+        if value < 0 or position > (self.image_height - 2*self.border_size):
+            raise InputError((value), "invalid bar value")
+
         # drawing range divided by number of bars + white space between them
         if self.bar_width < 1:
             raise InputError(self.bar_width, "bar_width cannot be less than 1")
@@ -184,6 +172,29 @@ class GraphIllustrator:
         """
         for i in range(len(values)):
             self.draw_bar(i, values[i], draw, self.colors.bar)
+
+    def draw_border(self, draw: ImageDraw) -> None:
+        """
+        Draws a 50% self._border_color border onto the image. Leaves the other half as self._background_color.
+
+        Args:
+            draw (ImageDraw): the drawing object.
+            
+        Modifies:
+            the Image pertaining to draw.
+
+        Returns:
+            None.
+        """
+        if self.border_size < 0 or self.border_size > min(self.image_height, self.image_width):
+            raise InputError(self.border_size, "border size cannot be negative or more than the image's minimum dimension")
+        top_coords = [(0, 0), (self.image_width, 0)]
+        bottom_coords = [(0, self.image_height-1), (self.image_width, self.image_height-1)]
+        left_coords = [(0, 0), (0, self.image_height)]
+        right_coords = [(self.image_width-1, 0),(self.image_width-1, self.image_height)]
+        border_coords = [top_coords, bottom_coords, left_coords, right_coords]
+        for coordinates in border_coords:
+            draw.line(coordinates, fill=self.colors.border, width=self.border_size)
 
     def draw_graph(self, values: List[int], draw: ImageDraw) -> None:
         """
