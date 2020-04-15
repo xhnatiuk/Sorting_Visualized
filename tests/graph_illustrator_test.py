@@ -1,6 +1,4 @@
 from src.graph_illustrator import GraphIllustrator
-from src.graph_generator import GraphGenerator
-from src.graph_strategy import GraphStrategy
 from src.exceptions import InputError
 from tests.image_testing import compare_images, COLORS
 from typing import List

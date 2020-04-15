@@ -120,7 +120,7 @@ class GraphIllustrator:
         """
         if position < 0 or position > (self.num_bars - 1):
             raise InputError((position), "invalid bar position")
-        if value < 0 or position > (self.image_height - 2*self.border_size):
+        if value < 0 or value > (self.image_height - 2*self.border_size):
             raise InputError((value), "invalid bar value")
 
         # drawing range divided by number of bars + white space between them
