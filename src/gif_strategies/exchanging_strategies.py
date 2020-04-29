@@ -52,16 +52,6 @@ class GnomeSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Gnome Sort
-
-        procedure gnomeSort(a[]):
-    pos := 0
-    while pos < length(a):
-        if (pos == 0 or a[pos] >= a[pos-1]):
-            pos := pos + 1
-        else:
-            swap a[pos] and a[pos-1]
-            pos := pos - 1
-
         """
         steps = []
         i = 0
