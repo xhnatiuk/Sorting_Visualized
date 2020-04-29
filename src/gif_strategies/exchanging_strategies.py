@@ -53,9 +53,32 @@ class GnomeSort(GifStrategy):
         """
         Fufuills the GifStrategy.generate_steps contract using Gnome Sort
 
-        TODO: implement
+        procedure gnomeSort(a[]):
+    pos := 0
+    while pos < length(a):
+        if (pos == 0 or a[pos] >= a[pos-1]):
+            pos := pos + 1
+        else:
+            swap a[pos] and a[pos-1]
+            pos := pos - 1
+
         """
-        return NotImplementedError
+        steps = []
+        i = 0
+        while i < len(values):
+            if (i == 0 or values[i] >= values[i-1]):
+                sort = Change("c", ["s", i])
+                steps.append(Step(i, [sort]))
+                i += 1
+            else:
+                values[i], values[i-1] = values[i-1], values[i]
+                exchange = Change("e", [i, i-1])
+                sort = Change("c", ["s", i])
+                steps.append(Step(i-1, [exchange, sort]))
+                i -= 1
+        return steps
+
+        
 
 class OddEvenSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:

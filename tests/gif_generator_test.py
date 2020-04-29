@@ -1,7 +1,7 @@
 from tests.image_testing import compare_gifs, COLORS
 from src.gif_strategies.selection_strategies import SelectionSort
 from src.gif_strategies.insertion_strategies import InsertionSort
-from src.gif_strategies.exchanging_strategies import BubbleSort
+from src.gif_strategies.exchanging_strategies import BubbleSort, GnomeSort
 from src.gif_strategies.merging_strategies import MergeSort
 from src.graph_illustrator import GraphIllustrator
 from src.gif_generator import GifGenerator
@@ -32,6 +32,11 @@ def test_selection_small():
 def test_bubble_small():
     file_name = "bubble_small"
     strategy = BubbleSort()
+    small(file_name, strategy)
+      
+def test_gnome_small():
+    file_name = "gnome_small"
+    strategy = GnomeSort()
     small(file_name, strategy)
     
 def test_insertion_small():
