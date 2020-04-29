@@ -85,28 +85,63 @@ class GifGenerator():
         if step.changes:
             for change in step.changes:
                 involved = change.involved
-                if change.ctype == "s":
-                    self.apply_sort(values, involved, draw)
+                if change.type == "c":
+                    self.apply_color(values, involved, draw)
                 else:
-                    if change.ctype == "e":
-                        self.apply_exchange(values, involved, draw)
+                    if change.type == "d":
+                        self.apply_draw(values, involved, draw)
                     else:
-                        if change.ctype == "m":
-                            self.apply_move(values, involved, draw)
-                    
+                        if change.type == "o":
+                            self.apply_overlay(values, involved, draw)
+                        else:
+                            if change.type == "e":
+                                self.apply_exchange(values, involved, draw)
+                            else:
+                                if change.type == "m":
+                                    self.apply_move(values, involved, draw)
 
+
+    def apply_draw(self, values:List[int], involved: List[int], draw: ImageDraw) -> None:
+        index = involved[0]
+        value = involved[1]
+        self.illustrator.erase_bar(index, draw)
+        self.illustrator.draw_bar(index, value, draw, self.illustrator.colors.bar)
+        values[index] = value
+
+    def apply_overlay(self, values:List[int], involved: List[int], draw: ImageDraw) -> None:
+        index = involved[0]
+        value = involved[1]
+        self.illustrator.draw_bar_outline(index, value, draw, self.illustrator.colors.finished)
+        values[index] = value
+                    
     def apply_exchange(self, values: List[int], involved: List[int], draw: ImageDraw) -> None:
         index_1 = involved[0]
         index_2 = involved[1]
         value_1 = values[index_1]
         value_2 = values[index_2]
-        self.illustrator.erase_bar(index_1, draw)
-        self.illustrator.erase_bar(index_2, draw)
-        self.illustrator.draw_bar(index_1, value_2, draw, self.illustrator.colors.bar)
-        self.illustrator.draw_bar(index_2, value_1, draw, self.illustrator.colors.bar)
-        values[index_1], values[index_2]= value_2, value_1
+        self.apply_draw(values, [index_1, value_2], draw)
+        self.apply_draw(values, [index_2, value_1], draw)
 
-    def apply_sort(self, values: List[int], involved: List[int], draw: ImageDraw) -> None:
-        for number in involved:
-            self.illustrator.draw_bar(number, values[number], draw, self.illustrator.colors.finished)
+    def apply_color(self, values:List[int], involved: List[int], draw: ImageDraw) -> None:
+        color = self.select_color(involved[0])
+        involved = involved[1:]
+        for index in involved:
+            self.illustrator.erase_bar(index, draw)
+            self.illustrator.draw_bar(index, values[index], draw, color)
 
+    def select_color(self, code: str) -> (int, int, int, int):
+        """
+        Selects the correct color based on the code
+
+        Args:
+            code (string): one of the preset color options
+
+        Returns:
+            color (int, int, int, int): a RGBA color code
+        """
+        switcher = {
+            "s": self.illustrator.colors.finished,
+            "f": self.illustrator.colors.fade,
+            "b": self.illustrator.colors.bar,
+        }
+        return switcher.get(code, None) 

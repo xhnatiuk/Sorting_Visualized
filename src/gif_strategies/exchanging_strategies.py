@@ -15,7 +15,8 @@ class BubbleSort(GifStrategy):
             num_sorted += 1
             exchange_occurred = False
             sorted_vals = list(range(len(values) - num_sorted, len(values)))
-            sort = Change("s", sorted_vals)
+            sorted_vals.insert(0, "s")
+            sort = Change("c", sorted_vals)
             steps.append(Step(0, [copy(sort)]))
             # iterate the value before the last unsorted value
             for i in range(len(values) - num_sorted):

@@ -6,7 +6,7 @@ from src.exceptions import InputError
 
 class ColorProfile:
     def __init__(self, background: (int, int, int, int), border: (int, int, int, int), 
-    bar: (int, int, int, int), finished: (int, int, int, int), cursor: (int, int, int, int)):
+    bar: (int, int, int, int), fade: (int, int, int, int), finished: (int, int, int, int), cursor: (int, int, int, int)):
         """
         Constructor for ColorProfile class.
 
@@ -19,6 +19,7 @@ class ColorProfile:
         self.background = background
         self.border = border
         self.bar = bar
+        self.fade = fade
         self.finished = finished
         self.cursor = cursor
 
@@ -152,6 +153,24 @@ class GraphIllustrator:
         """
         max_bar_val = self.image_height - 2*self.border_size
         self.draw_bar(position, max_bar_val, draw, self.colors.background)
+
+    def draw_bar_outline(self, position: int, value: int, draw: ImageDraw, color: (int, int, int, int)):
+        if position < 0 or position > (self.num_bars - 1):
+            raise InputError((position), "invalid bar position")
+        if value < 0 or value > (self.image_height - 2*self.border_size):
+            raise InputError((value), "invalid bar value")
+        # drawing range divided by number of bars + white space between them
+        if self.bar_width < 1:
+            raise InputError(self.bar_width, "bar_width cannot be less than 1")
+        # calculate starting offset to ensure graph is centered within the border 
+        x_start = self.border_size + math.ceil(self.padding/2) + math.floor(self.bar_width/2)
+        x_offset = x_start + (2*self.bar_width)*position
+        y_offset = self.image_height - self.border_size
+        line_offset = math.floor(self.bar_width/2)
+        if value != 0:
+            draw.line ([(x_offset - line_offset, y_offset),(x_offset - line_offset, y_offset - value)], fill=color, width=1)
+            draw.line ([(x_offset + line_offset - 1, y_offset),(x_offset + line_offset - 1, y_offset - value)], fill=color, width=1)
+            draw.line ([(x_offset - line_offset, y_offset - value),(x_offset + line_offset - 1, y_offset - value)], fill=color, width=1)
 
     def draw_bars(self, values: List[int], draw: ImageDraw) -> None:
         """

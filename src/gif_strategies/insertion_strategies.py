@@ -18,14 +18,16 @@ class InsertionSort(GifStrategy):
             # move sorted values that are greater than insert forwards
             while j >= 0 and insert < values[j]: 
                     values[j + 1] = values[j] 
-                    exchange = Change("e", [j, j+1])
-                    sort = Change("s", [j+1])
-                    steps.append(Step(j, [exchange, sort]))
+                    erase = Change("d", [j, 0])
+                    draw  = Change("d", [j+1, values[j]])
+                    sort = Change("c", ["s", j+1])
+                    steps.append(Step(j, [erase, draw, sort]))
                     j -= 1
             # place insert in the correct position
             values[j + 1] = insert 
-            exchange = Change("e", [j+1, j+1])
-            steps.append(Step(j+1, [exchange]))
+            draw = Change("d", [j+1, insert])
+            sort = Change("c", ["s", j+1])
+            steps.append(Step(j+1, [draw, sort]))
         return steps
 
 class ShellSort(GifStrategy):

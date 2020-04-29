@@ -4,23 +4,27 @@ from typing import List
 class Change:
     """
     Class for defining changes that have taken place during sorting
-    ctypes: 
+    types: 
+        d: draw
+        o: overlay
         e: exchange
-        s: sort
-        m: move
+        c: color
+            s: sort
+            f: fade
+            u: unfade
     """
-    ctype: str
+    type: str
     involved: List[int]
 
-    def __init__(self, ctype: str, involved: List[int]):
+    def __init__(self, type: str, involved: List[int]):
         """
         Change class constructor
 
         Args:
-            ctype (str): the type of change applied
+            type (str): the type of change applied
             involved (List[int]): indicies of values involved in the change
         """
-        self.ctype = ctype
+        self.type = type
         self.involved = involved 
 
 class Step:

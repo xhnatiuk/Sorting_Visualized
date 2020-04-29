@@ -19,7 +19,7 @@ class SelectionSort(GifStrategy):
             # swap the minimum to the front
             values[i], values[minimum_index] = values[minimum_index], values[i]
             exchange = Change("e", [i, minimum_index])
-            sort = Change("s", [i])
+            sort = Change("c", ["s", i])
             steps.append(Step(i, [exchange, sort]))
         return steps
 
