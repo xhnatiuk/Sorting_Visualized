@@ -8,7 +8,7 @@ class InsertionSort(GifStrategy):
         Fufuills the GifStrategy.generate_steps contract using Insertion Sort
         """
         steps = []
-        start = Change("s", [0])
+        start = Change("c", ["s", 0])
         steps.append(Step(0, [start])) 
         for i in range(1, len(values)): 
             # set the next unsorted value as insert
