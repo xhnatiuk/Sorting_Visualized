@@ -97,8 +97,11 @@ class GifGenerator():
                             if change.type == "e":
                                 self.apply_exchange(values, involved, draw)
                             else:
-                                if change.type == "m":
-                                    self.apply_move(values, involved, draw)
+                                if change.type == "a":
+                                    self.apply_add_cursor(values, involved, draw)
+                                else:
+                                    if change.type == "r":
+                                        self.apply_remove_cursor(values, involved, draw)
 
 
     def apply_draw(self, values:List[int], involved: List[int], draw: ImageDraw) -> None:
@@ -122,6 +125,14 @@ class GifGenerator():
         self.apply_draw(values, [index_1, value_2], draw)
         self.apply_draw(values, [index_2, value_1], draw)
 
+    def apply_add_cursor(self, values: List[int], involved: List[int], draw: ImageDraw) -> None:
+        for i in involved:
+                self.illustrator.draw_cursor(i, draw, self.illustrator.colors.cursor)
+
+    def apply_remove_cursor(self, values: List[int], involved: List[int], draw: ImageDraw) -> None:
+        for i in involved:
+            self.illustrator.erase_cursor(i, draw)
+
     def apply_color(self, values:List[int], involved: List[int], draw: ImageDraw) -> None:
         color = self.select_color(involved[0])
         involved = involved[1:]
@@ -142,6 +153,7 @@ class GifGenerator():
         switcher = {
             "s": self.illustrator.colors.finished,
             "f": self.illustrator.colors.fade,
+            "c": self.illustrator.colors.cursor,
             "b": self.illustrator.colors.bar,
         }
         return switcher.get(code, None) 
