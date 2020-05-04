@@ -85,18 +85,24 @@ class MergeSort(GifStrategy):
         i, j = 0, 0
         while (len(merged) < len(left) + len(right)):
             cursor = position+i+j
+            left_cursor = position+i
+            right_cursor = position+len(left)-1+j
+            add_right_cursor = Change("a", [right_cursor])
+            remove_right_cursor = Change("r", [right_cursor])
+            steps.append(Step(left_cursor, [add_right_cursor]))
             if j == len(right) or (i != len(left) and left[i] < right[j]):
                 merged.append(left[i])
                 overlay = Change("o", [cursor, left[i]])
-                steps.append(Step(cursor, [overlay]))
+                steps.append(Step(cursor, [remove_right_cursor, overlay]))
                 i+= 1
             else:
                 merged.append(right[j])
                 overlay = Change("o", [cursor, right[j]])
-                steps.append(Step(cursor, [overlay]))
+                steps.append(Step(cursor, [remove_right_cursor, overlay]))
                 j+= 1
-            sort = Change("c", ["s", cursor])
-            sorted_steps.append(Step(cursor, [sort]))
+            # color in the newly selected value and remove the right cursor
+            fill = Change("c", ["s", cursor])
+            sorted_steps.append(Step(cursor, [fill]))
         for step in sorted_steps:
             steps.append(step)
         return (merged, steps)
