@@ -53,7 +53,7 @@ class TestGenerateGraph:
     illustrator: GraphIllustrator):
         fp_actual = OUTPUT_FILEPATH + "" + test_name + ".png"
         fp_expected = REFERENCE_FILEPATH + "" + test_name + ".png"
-        fp_function = "images/tests/graph_generator/" + test_name
+        fp_function = OUTPUT_FILEPATH + test_name
         generator = GraphGenerator(strategy)
         generator.generate_graph(quantity, illustrator, fp_function)
         compare_images(fp_actual, fp_expected)
@@ -61,7 +61,7 @@ class TestGenerateGraph:
     # for tests that will have different outputs depending on random seed
     def helper_no_compare(self, test_name: str, quantity: int, strategy: GraphStrategy, 
     illustrator: GraphIllustrator):
-        fp_function = "images/tests/graph_generator/" + test_name
+        fp_function = OUTPUT_FILEPATH + test_name
         generator = GraphGenerator(strategy)
         generator.generate_graph(quantity, illustrator, fp_function)
         assert True

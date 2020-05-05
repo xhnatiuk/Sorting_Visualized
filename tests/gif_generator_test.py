@@ -16,7 +16,7 @@ def generate_gif_test_helper(file_name: str, strategy: GifStrategy, values: List
     fp_expected = REFERENCE_FILEPATH + file_name + ".gif"
     illustrator = GraphIllustrator(len(values), image_size, 10, COLORS)
     gif_generator = GifGenerator(strategy, illustrator)
-    gif_generator.generate_gif(values, fp_actual+".png")
+    gif_generator.generate_gif(values, fp_actual, 1)
     compare_gifs(fp_actual+".gif", fp_expected)
 
 def decreasing(name: str, strategy: GifStrategy):

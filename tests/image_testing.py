@@ -3,7 +3,7 @@ from PIL import Image
 from src.graph_illustrator import ColorProfile
 
 
-COLORS = ColorProfile((255, 255, 255, 255), (0, 0, 0, 255), (33, 150, 243, 255), (116, 130, 142, 255), (21, 94, 152, 255), (243, 33, 45, 255))
+COLORS = ColorProfile((255, 255, 255), (0, 0, 0), (33, 150, 243), (116, 130, 142), (21, 94, 152), (243, 33, 45))
 def compare_images(fp_actual: str, fp_expected: str):
     actual = Image.open(fp_actual)
     expected = Image.open(fp_expected)
