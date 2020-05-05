@@ -23,7 +23,7 @@ class MergeSort(GifStrategy):
         """
         steps = []
         if len(values) < 2:
-            sort = Change("c", ["s", position])
+            sort = Change("color", ["sorted", position])
             steps.append(Step(position, [sort]))
             return (values, steps)
         middle = math.ceil(len(values)/2)
@@ -33,8 +33,8 @@ class MergeSort(GifStrategy):
         # LEFT SIDE
         # fade the right side
         right_fade_vals = list(range(position + middle, position+ len(values)))
-        right_fade_vals.insert(0, "f")
-        fade_right = Change("c", right_fade_vals)
+        right_fade_vals.insert(0, "fade")
+        fade_right = Change("color", right_fade_vals)
         steps.append(Step(position, [fade_right]))
         # recurse, update values, and add steps
         left_output = self.merge_sort(left_values, position)
@@ -42,15 +42,15 @@ class MergeSort(GifStrategy):
         steps.extend(left_output[1])
         # unfade and unsort
         unfade_vals = list(range(position, position + len(values)))
-        unfade_vals.insert(0, "b")
-        unfade = Change("c", unfade_vals)
+        unfade_vals.insert(0, "bar")
+        unfade = Change("color", unfade_vals)
         steps.append(Step(position, [unfade]))
 
         # RIGHT SIDE
         # fade the left side
         left_fade_vals = list(range(position, position + middle))
-        left_fade_vals.insert(0, "f")
-        fade_left = Change("c", left_fade_vals)
+        left_fade_vals.insert(0, "fade")
+        fade_left = Change("color", left_fade_vals)
         steps.append(Step(position + middle, [fade_left]))
         # recurse, update values, and add steps
         right_output = self.merge_sort(right_values, position + middle)
@@ -87,21 +87,21 @@ class MergeSort(GifStrategy):
             cursor = position+i+j
             left_cursor = position+i
             right_cursor = position+len(left)-1+j
-            add_right_cursor = Change("a", [right_cursor])
-            remove_right_cursor = Change("r", [right_cursor])
+            add_right_cursor = Change("add_cursor", [right_cursor])
+            remove_right_cursor = Change("remove_cursor", [right_cursor])
             steps.append(Step(left_cursor, [add_right_cursor]))
             if j == len(right) or (i != len(left) and left[i] < right[j]):
                 merged.append(left[i])
-                overlay = Change("o", [cursor, left[i]])
+                overlay = Change("overlay", [cursor, left[i]])
                 steps.append(Step(cursor, [remove_right_cursor, overlay]))
                 i+= 1
             else:
                 merged.append(right[j])
-                overlay = Change("o", [cursor, right[j]])
+                overlay = Change("overlay", [cursor, right[j]])
                 steps.append(Step(cursor, [remove_right_cursor, overlay]))
                 j+= 1
             # color in the newly selected value and remove the right cursor
-            fill = Change("c", ["s", cursor])
+            fill = Change("color", ["sorted", cursor])
             sorted_steps.append(Step(cursor, [fill]))
         for step in sorted_steps:
             steps.append(step)

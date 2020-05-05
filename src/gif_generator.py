@@ -1,5 +1,5 @@
-from src.gif_strategy import GifStrategy, Step, Change
-from src.graph_illustrator import GraphIllustrator
+from .gif_strategy import GifStrategy, Step, Change
+from .graph_illustrator import GraphIllustrator
 from typing import List
 from copy import copy, deepcopy
 from PIL import Image, ImageDraw
@@ -29,7 +29,7 @@ class GifGenerator():
         sorting_list = values.copy()
         return self._strategy.generate_steps(sorting_list)
 
-    def generate_gif(self, values: List[int], file_path: str) -> int:
+    def generate_gif(self, values: List[int], file_path: str, speed: int) -> None:
         """
         generates images of the graph coresponding to the changes in steps
 
@@ -46,10 +46,10 @@ class GifGenerator():
             None
         """
         steps = self.generate_steps(values)
-        graph = Image.open(file_path)
+        base_img_path = file_path + ".png"
+        graph = Image.open(base_img_path)
         if file_path[0] == ".":
             file_path = file_path[2:]
-        file_path = file_path[:file_path.find('.')]
         file_path = file_path + ".gif"
         frames = []
         gif = graph.copy()
@@ -62,7 +62,7 @@ class GifGenerator():
             last_frame = frame.copy()
             draw = ImageDraw.Draw(last_frame)
             self.illustrator.erase_cursor(step.position, draw)
-        gif.save(file_path, save_all=True, append_images=frames)
+        gif.save(file_path, save_all=True, append_images=frames, duration=speed*10)
 
     def generate_frame(self, values: List[int], step: Step, frame: Image) -> None:
         """
@@ -84,29 +84,17 @@ class GifGenerator():
         self.illustrator.draw_cursor(step.position, draw, self.illustrator.colors.cursor)
         if step.changes:
             for change in step.changes:
-                involved = change.involved
-                if change.type == "c":
-                    self.apply_color(values, involved, draw)
-                else:
-                    if change.type == "d":
-                        self.apply_draw(values, involved, draw)
-                    else:
-                        if change.type == "o":
-                            self.apply_overlay(values, involved, draw)
-                        else:
-                            if change.type == "e":
-                                self.apply_exchange(values, involved, draw)
-                            else:
-                                if change.type == "a":
-                                    self.apply_add_cursor(values, involved, draw)
-                                else:
-                                    if change.type == "r":
-                                        self.apply_remove_cursor(values, involved, draw)
+                self.step_dispatch(change.type, values, change.involved, draw)
 
-
+    def step_dispatch(self, code: str, values:List[int], involved: List[int], draw: ImageDraw) -> None:
+        method_name = "apply_" + str(code)
+        method = getattr(self, method_name)
+        return method(values, involved, draw)
+    
     def apply_draw(self, values:List[int], involved: List[int], draw: ImageDraw) -> None:
         index = involved[0]
         value = involved[1]
+        print(index)
         self.illustrator.erase_bar(index, draw)
         self.illustrator.draw_bar(index, value, draw, self.illustrator.colors.bar)
         values[index] = value
@@ -151,9 +139,8 @@ class GifGenerator():
             color (int, int, int, int): a RGBA color code
         """
         switcher = {
-            "s": self.illustrator.colors.finished,
-            "f": self.illustrator.colors.fade,
-            "c": self.illustrator.colors.cursor,
-            "b": self.illustrator.colors.bar,
+            "sorted": self.illustrator.colors.finished,
+            "fade": self.illustrator.colors.fade,
+            "bar": self.illustrator.colors.bar,
         }
         return switcher.get(code, None) 

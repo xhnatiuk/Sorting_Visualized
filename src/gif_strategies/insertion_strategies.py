@@ -8,7 +8,7 @@ class InsertionSort(GifStrategy):
         Fufuills the GifStrategy.generate_steps contract using Insertion Sort
         """
         steps = []
-        start = Change("c", ["s", 0])
+        start = Change("color", ["sorted", 0])
         steps.append(Step(0, [start])) 
         for i in range(1, len(values)): 
             # set the next unsorted value as insert
@@ -18,15 +18,15 @@ class InsertionSort(GifStrategy):
             # move sorted values that are greater than insert forwards
             while j >= 0 and insert < values[j]: 
                     values[j + 1] = values[j] 
-                    erase = Change("d", [j, 0])
-                    draw  = Change("d", [j+1, values[j]])
-                    sort = Change("c", ["s", j+1])
+                    erase = Change("draw", [j, 0])
+                    draw  = Change("draw", [j+1, values[j]])
+                    sort = Change("color", ["sorted", j+1])
                     steps.append(Step(j, [erase, draw, sort]))
                     j -= 1
             # place insert in the correct position
             values[j + 1] = insert 
-            draw = Change("d", [j+1, insert])
-            sort = Change("c", ["s", j+1])
+            draw = Change("draw", [j+1, insert])
+            sort = Change("color", ["sorted", j+1])
             steps.append(Step(j+1, [draw, sort]))
         return steps
 

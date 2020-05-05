@@ -4,27 +4,20 @@ from typing import List
 class Change:
     """
     Class for defining changes that have taken place during sorting
-    types: 
-        d: draw
-        o: overlay
-        e: exchange
-        c: color
-            s: sort
-            f: fade
-            u: unfade
+    indentifier: draw, overlay, exchange, add_cursor, remove_cursor, color(sorted, bar, fade)
     """
-    type: str
+    indentifier: str
     involved: List[int]
 
-    def __init__(self, type: str, involved: List[int]):
+    def __init__(self, indentifier: str, involved: List[int]):
         """
         Change class constructor
 
         Args:
-            type (str): the type of change applied
-            involved (List[int]): indicies of values involved in the change
+            indentifier (str): the indentifier of the change applied
+            involved (List[int]): values involved in the change
         """
-        self.type = type
+        self.type = indentifier
         self.involved = involved 
 
 class Step:

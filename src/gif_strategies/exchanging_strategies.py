@@ -16,8 +16,8 @@ class BubbleSort(GifStrategy):
             num_sorted += 1
             exchange_occurred = False
             sorted_vals = list(range(len(values) - num_sorted, len(values)))
-            sorted_vals.insert(0, "s")
-            sort = Change("c", sorted_vals)
+            sorted_vals.insert(0, "sorted")
+            sort = Change("color", sorted_vals)
             steps.append(Step(0, [copy(sort)]))
             # iterate the value before the last unsorted value
             for i in range(len(values) - num_sorted):
@@ -25,12 +25,12 @@ class BubbleSort(GifStrategy):
                 # bubble-up value i
                 if values[i] > values[i + 1]:
                     values[i], values[i + 1] = values[i + 1], values[i]
-                    exchange = Change("e", [i, i+1])
+                    exchange = Change("exchange", [i, i+1])
                     steps.append(Step(i+1, [exchange]))
                     exchange_occurred = True
         sorted_vals = list(range(0, len(values)))
-        sorted_vals.insert(0, "s")
-        sort = Change("c", sorted_vals)
+        sorted_vals.insert(0, "sorted")
+        sort = Change("color", sorted_vals)
         steps.append(Step(0, [copy(sort)]))
         return steps
 
@@ -50,12 +50,12 @@ class CocktailSort(GifStrategy):
                 if values[i] > values[i+1]:
                     values[i], values[i+1] = values[i+1], values[i]
                     exchange_occurred = True
-                    exchange = Change("e", [i, i+1])
+                    exchange = Change("exchange", [i, i+1])
                     steps.append(Step(i, [exchange]))
                 else:
                     steps.append(Step(i))
             last_sorted = len(values)-1 -num_iterations
-            end_sort = Change("c", ["s", last_sorted])
+            end_sort = Change("color", ["sorted", last_sorted])
             steps.append(Step(last_sorted, [end_sort]))
             
             # if no exchange occured values are sorted
@@ -68,16 +68,16 @@ class CocktailSort(GifStrategy):
                 if values[i] > values[i+1]:
                     values[i], values[i+1] = values[i+1], values[i]
                     exchange_occurred = True
-                    exchange = Change("e", [i, i+1])
+                    exchange = Change("exchange", [i, i+1])
                     steps.append(Step(i+1, [exchange]))
                 else:
                     steps.append(Step(i))
-            start_sort = Change("c", ["s", num_iterations])
+            start_sort = Change("color", ["sorted", num_iterations])
             steps.append(Step(num_iterations, [start_sort]))
             num_iterations += 1
         sorted_vals = list(range(0, len(values)))
-        sorted_vals.insert(0, "s")
-        sort = Change("c", sorted_vals)
+        sorted_vals.insert(0, "sorted")
+        sort = Change("color", sorted_vals)
         steps.append(Step(0, [copy(sort)]))
         return steps
 
@@ -99,20 +99,20 @@ class CombSort(GifStrategy):
                 exchange_occurred = False
                 gap = 1
             for i in range (len(values) - gap):
-                remove_cursor = Change("r", [i+gap-1])
-                add_cursor = Change("a", [i+gap])
+                remove_cursor = Change("remove_cursor", [i+gap-1])
+                add_cursor = Change("add_cursor", [i+gap])
                 steps.append(Step(i, [remove_cursor, add_cursor]))
                 if values[i] > values[i + gap]:
                     values[i], values[i+ gap] = values[i + gap], values[i]
-                    exchange = Change("e", [i, i+gap])
+                    exchange = Change("exchange", [i, i+gap])
                     steps.append(Step(i, [exchange]))
                     exchange_occurred = True
                 if i == len(values) - gap - 1:
-                    remove_final_cursor = Change("r", [i+gap])
+                    remove_final_cursor = Change("remove_cursor", [i+gap])
                     steps.append(Step(i, [remove_final_cursor]))
         sorted_vals = list(range(0, len(values)))
-        sorted_vals.insert(0, "s")
-        sort = Change("c", sorted_vals)
+        sorted_vals.insert(0, "sorted")
+        sort = Change("color", sorted_vals)
         steps.append(Step(0, [copy(sort)]))
         return steps
 
@@ -125,13 +125,13 @@ class GnomeSort(GifStrategy):
         i = 0
         while i < len(values):
             if (i == 0 or values[i] >= values[i-1]):
-                sort = Change("c", ["s", i])
+                sort = Change("color", ["sorted", i])
                 steps.append(Step(i, [sort]))
                 i += 1
             else:
                 values[i], values[i-1] = values[i-1], values[i]
-                exchange = Change("e", [i, i-1])
-                sort = Change("c", ["s", i])
+                exchange = Change("exchange", [i, i-1])
+                sort = Change("color", ["sorted", i])
                 steps.append(Step(i-1, [exchange, sort]))
                 i -= 1
         return steps
@@ -148,7 +148,7 @@ class OddEvenSort(GifStrategy):
             for i in range (1, len(values)-1, 2):
                 if values[i] > values [i+1]:
                     values[i], values[i+1] = values[i+1], values[i]
-                    exchange = Change("e", [i, i+1])
+                    exchange = Change("exchange", [i, i+1])
                     steps.append(Step(i, [exchange]))
                     done = False
                 else:
@@ -156,13 +156,13 @@ class OddEvenSort(GifStrategy):
             for i in range (0, len(values)-1, 2):
                 if values[i] > values [i+1]:
                     values[i], values[i+1] = values[i+1], values[i]
-                    exchange = Change("e", [i, i+1])
+                    exchange = Change("exchange", [i, i+1])
                     steps.append(Step(i, [exchange]))
                     done = False
                 else:
                     steps.append(Step(i))
         sorted_vals = list(range(0, len(values)))
-        sorted_vals.insert(0, "s")
-        sort = Change("c", sorted_vals)
+        sorted_vals.insert(0, "sorted")
+        sort = Change("color", sorted_vals)
         steps.append(Step(0, [copy(sort)]))
         return steps
