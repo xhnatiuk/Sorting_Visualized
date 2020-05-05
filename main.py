@@ -5,7 +5,7 @@ from src.input_handler import handle_input
 
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="Visualize Sorting",
+        prog="Sorting Visualized",
         usage="%(prog)s [OPTION] [FILE]...",
         description="Generate bar chart visualizations of sorting algorithms"
         )
