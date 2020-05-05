@@ -1,8 +1,8 @@
 from typing import List
 from PIL import Image, ImageDraw
-from src.graph_strategy import GraphStrategy
-from src.graph_illustrator import GraphIllustrator
-from src.exceptions import InputError
+from .graph_strategy import GraphStrategy
+from .graph_illustrator import GraphIllustrator
+from .exceptions import InputError
 
 class GraphGenerator():
     def __init__(self, strategy: GraphStrategy) -> None:
@@ -16,7 +16,7 @@ class GraphGenerator():
         self._strategy = strategy
      
 
-    def generate_graph(self, quantity: int, illustrator: GraphIllustrator, file_path: str) -> None:
+    def generate_graph(self, quantity: int, illustrator: GraphIllustrator, file_path: str) -> List[int]:
         """
         generates and saves an image of a graph
         
@@ -36,7 +36,7 @@ class GraphGenerator():
                 *number of values is too large for the image size
 
         Returns:
-            None
+            values (List[int]): the values used in the generated graph
         """
         if quantity < 1:
             raise InputError(quantity, "cannot generate graph with less than 1 value")
@@ -47,8 +47,9 @@ class GraphGenerator():
         graph = create_graph_base(illustrator.image_width, illustrator.image_height, illustrator.colors.background)
         draw = ImageDraw.Draw(graph)
         illustrator.draw_graph(values, draw)
-        fp = "./out/"+file_path+".png"
+        fp = file_path+".png"
         graph.save(fp)
+        return values
 
 def create_graph_base(width: (int), height: (int), background_color: (int, int, int, int)) -> Image:
     """

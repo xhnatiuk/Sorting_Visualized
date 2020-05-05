@@ -1,28 +1,14 @@
 from typing import List
-from src.graph_illustrator import ColorProfile, GraphIllustrator
-from src.graph_strategy import *
-from src.gif_strategies.selection_strategies import *
-from src.graph_generator import GraphGenerator
-from src.gif_generator import GifGenerator
-    
-def select_image_size(code: str) -> int:
-    """
-    Selects the correct height and width of the graph in pixels.
+from .graph_illustrator import ColorProfile, GraphIllustrator
+from .graph_strategy import *
+from .gif_strategies.selection_strategies import SelectionSort
+from .gif_strategies.insertion_strategies import InsertionSort
+from .gif_strategies.exchanging_strategies import BubbleSort, CocktailSort, CombSort, OddEvenSort, GnomeSort
+from .gif_strategies.merging_strategies import MergeSort
+from .graph_generator import GraphGenerator
+from .gif_generator import GifGenerator
 
-    Args:
-        code (string): one of the preset graph size codes.
-
-    Returns:
-        img_size (int): a positive integer representing width and height.
-    """
-    switcher = {
-        "s": 250,
-        "m": 500,
-        "l": 750,
-    }
-    return switcher.get(code, "250") 
-
-def select_color_profile(cp: str)-> ColorProfile:
+def select_color_profile(color: str)-> ColorProfile:
     """
     Selects the correct color profile.
 
@@ -31,17 +17,33 @@ def select_color_profile(cp: str)-> ColorProfile:
 
     Returns:
         img_size (int): a positive integer representing width and height.
-
-    TODO: add options!
     """
+    background_color = (255, 255, 225)
+    border_color = (0, 0, 0)
 
-    background_color = (255, 255, 225, 255)
-    border_color = (0, 0, 0, 255)
-    bar_color = (33, 150, 243, 255)
-    fade_color = (116, 130, 142, 255)
-    sort_color = (21, 94, 152, 255)
-    cursor_color = (243, 33, 45, 0)
-    return ColorProfile(background_color, border_color, bar_color, fade_color, sort_color, cursor_color)
+    red_bar_color = (244, 67, 54)
+    red_cursor_color = (162, 54, 244)
+    red_sorted_color = (153, 42, 34)
+    red_fade_color = (251, 185, 180)
+
+    blue_bar_color = (33, 150, 243)
+    blue_cursor_color = (243, 126, 33)
+    blue_sorted_color = (21, 94, 152)
+    blue_fade_color = (172, 216, 250)
+
+    green_bar_color = (76, 175, 80)
+    green_cursor_color = (175, 129, 76)
+    green_sorted_color = (48, 109, 50)
+    green_fade_color = (188, 225, 189)
+    switcher = {
+        "red": ColorProfile(background_color, border_color, red_bar_color, red_fade_color, red_sorted_color, red_cursor_color),
+        "blue": ColorProfile(background_color, border_color, blue_bar_color, blue_fade_color, blue_sorted_color, blue_cursor_color),
+        "green": ColorProfile(background_color, border_color, green_bar_color, green_fade_color, green_sorted_color, green_cursor_color),
+        }
+    return switcher.get(color, None) 
+
+
+    return 
 
 def select_graph_strategy(code: str) -> GraphStrategy:
     """
@@ -54,13 +56,13 @@ def select_graph_strategy(code: str) -> GraphStrategy:
         strategy(GraphStrategy): A instance of the correct GraphStrategy.
     """
     switcher = {
-        "i": Increasing(),
-        "d": Decreasing(),
-        "n": NearlySorted(),
-        "f": FewUnique(),
-        "r": Random(),
+        "increasing": Increasing(),
+        "decreasing": Decreasing(),
+        "nearly": NearlySorted(),
+        "few": FewUnique(),
+        "random": Random(),
         }
-    return switcher.get(code, "d") 
+    return switcher.get(code, None) 
 
 def select_gif_strategy(code: str) -> GraphStrategy:
     """
@@ -73,25 +75,23 @@ def select_gif_strategy(code: str) -> GraphStrategy:
         strategy(GifStrategy): A instance of the correct GifStrategy.
     """
     switcher = {
-        "s1": SelectionSort(),
-        "s2": Heapsort(),
-        "s3": Smoothsort(),
-        "s4": Strandsort(),
-        "s5": TournamentSort(),
+        "selection": SelectionSort(),
+        "insertion": InsertionSort(),
+        "bubble": BubbleSort(),
+        "cocktail": CocktailSort(),
+        "comb": CombSort(),
+        "gnome": GnomeSort(),
+        "oddeven": OddEvenSort(),
+        "merge": MergeSort(),
         }
-    return switcher.get(code, "s1") 
+    return switcher.get(code, None) 
 
-def handle_input(num_values: int, graph_choice: str, gif_choice: str, size: str, cp: str, file_path: str) -> None:
+def handle_input(args) -> None:
     """
     Transforms command line inputs into the specififed graph.
 
     Args:
-        num_values (int): the number of values to be generated.
-        graph_choice (string): one of the preset graph strategy inputs
-        gif_choice (string): one of the preset gif strategy inputs
-        size (string): one of the preset graph sizes.
-        cp (string): one of the preset color profiles.
-        file_path (string): the path relative to ./out to save the graph.
+        args (Namespace): object holding parsed command line attributes
 
     Raises:
         InputError: 
@@ -101,13 +101,11 @@ def handle_input(num_values: int, graph_choice: str, gif_choice: str, size: str,
     Returns:
         None.
     """
-    image_size = select_image_size(size)
-    border_size = 10
-    colors = select_color_profile(cp)
-    illustrator = GraphIllustrator((num_values, image_size, image_size), border_size, colors)
-    graph_strategy = select_graph_strategy(graph_choice)
+    colors = select_color_profile(args.color)
+    illustrator = GraphIllustrator(args.quantity, (args.dimension, args.dimension), args.border, colors)
+    graph_strategy = select_graph_strategy(args.input)
     graph_generator = GraphGenerator(graph_strategy)
-    graph_generator.generate_graph(num_values, illustrator, file_path)
-    gif_strategy = select_gif_strategy(gif_choice)
+    values = graph_generator.generate_graph(args.quantity, illustrator, args.path)
+    gif_strategy = select_gif_strategy(args.algorithm)
     gif_generator = GifGenerator(gif_strategy, illustrator)
-    # generate gif
+    gif_generator.generate_gif(values, args.path, args.speed)

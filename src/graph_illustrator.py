@@ -2,19 +2,19 @@ import sys
 import math
 from PIL import Image, ImageDraw
 from typing import List
-from src.exceptions import InputError
+from .exceptions import InputError
 
 class ColorProfile:
-    def __init__(self, background: (int, int, int, int), border: (int, int, int, int), 
-    bar: (int, int, int, int), fade: (int, int, int, int), finished: (int, int, int, int), cursor: (int, int, int, int)):
+    def __init__(self, background: (int, int, int), border: (int, int, int), 
+    bar: (int, int, int), fade: (int, int, int), finished: (int, int, int), cursor: (int, int, int)):
         """
         Constructor for ColorProfile class.
 
-        background (int, int, int, int): the RGBA color code for the background.
-        border (int, int, int, int): the RGBA color code for the border.
-        bar (int, int, int, int): the RGBA color code for the bar.
-        finished (int, int, int, int): the RGBA color code for the sorted bars.
-        cursor (int, int, int, int): the RGBA color code for the cursor.
+        background (int, int, int): the RGB color code for the background.
+        border (int, int, int): the RGB color code for the border.
+        bar (int, int, int): the RGB color code for the bar.
+        finished (int, int, int): the RGB color code for the sorted bars.
+        cursor (int, int, int): the RGB color code for the cursor.
         """
         self.background = background
         self.border = border
@@ -32,24 +32,24 @@ class GraphIllustrator:
         Args:
             image_size (int, int): the width and height of the image.
             border_size (int): the size of the border.
-            colors (ColorProfile): RGBA color profile for the GraphIllustrator.
+            colors (ColorProfile): RGB color profile for the GraphIllustrator.
         """
         self.image_width = image_size[0]
         self.image_height = image_size[1]
         self.border_size = border_size
         self.num_bars = num_bars
-        self.bar_width = math.floor((self.image_width - 2*self.border_size)/(2*num_bars - 1))
+        self.bar_width = (self.image_width - 2*self.border_size)//(2*num_bars - 1)
         self.padding = (self.image_width - 2*self.border_size) - (self.bar_width*(2*num_bars -1))
         self.colors = colors
 
-    def draw_cursor(self, position: int, draw: ImageDraw, color:(int, int, int, int)) -> None:
+    def draw_cursor(self, position: int, draw: ImageDraw, color:(int, int, int)) -> None:
         """
         draws a color cursor on the image at the position.
 
         Args:
             position (int): the index of the cursor.
             draw (ImageDraw): the drawing object.
-            color (int, int, int, int): RGBA color code.
+            color (int, int, int, int): RGB color code.
 
         Modifies:
             the Image pertaining to draw.
@@ -62,7 +62,7 @@ class GraphIllustrator:
 
         cursor_width = self.bar_width
         x_start = self.border_size + math.ceil(self.padding/2)
-        cursor_center = x_start + (2*self.bar_width)*position  + math.floor(self.bar_width/2)          
+        cursor_center = x_start + (2*self.bar_width)*position  + self.bar_width//2          
         max_left_bound = x_start + (2*self.bar_width)*position
         max_right_bound = max_left_bound + self.bar_width
         top_bound = self.image_height - self.border_size + 1
@@ -96,7 +96,7 @@ class GraphIllustrator:
         """
         self.draw_cursor(position, draw, self.colors.background)
 
-    def draw_bar(self, position: int, value: int, draw: ImageDraw, color: (int, int, int, int)) -> None:
+    def draw_bar(self, position: int, value: int, draw: ImageDraw, color: (int, int, int)) -> None:
         """
         draws a color bar of the correct height on the image at the position.
 
@@ -104,7 +104,7 @@ class GraphIllustrator:
             position (int): the index of the bar.
             value (int): the new bar value.
             draw (ImageDraw): the drawing object.
-            color (int, int, int, int): RGBA color code.
+            color (int, int, int, int): RGB color code.
 
         Modifies:
             the Image pertaining to draw.
@@ -123,12 +123,11 @@ class GraphIllustrator:
             raise InputError((position), "invalid bar position")
         if value < 0 or value > (self.image_height - 2*self.border_size):
             raise InputError((value), "invalid bar value")
-
         # drawing range divided by number of bars + white space between them
         if self.bar_width < 1:
             raise InputError(self.bar_width, "bar_width cannot be less than 1")
         # calculate starting offset to ensure graph is centered within the border 
-        x_start = self.border_size + math.ceil(self.padding/2) + math.floor(self.bar_width/2)
+        x_start = self.border_size + math.ceil(self.padding/2) + self.bar_width//2
         x_offset = x_start + (2*self.bar_width)*position
         y_offset = self.image_height - self.border_size
         if value != 0:
@@ -154,7 +153,7 @@ class GraphIllustrator:
         max_bar_val = self.image_height - 2*self.border_size
         self.draw_bar(position, max_bar_val, draw, self.colors.background)
 
-    def draw_bar_outline(self, position: int, value: int, draw: ImageDraw, color: (int, int, int, int)):
+    def draw_bar_outline(self, position: int, value: int, draw: ImageDraw, color: (int, int, int)):
         if position < 0 or position > (self.num_bars - 1):
             raise InputError((position), "invalid bar position")
         if value < 0 or value > (self.image_height - 2*self.border_size):
@@ -163,10 +162,10 @@ class GraphIllustrator:
         if self.bar_width < 1:
             raise InputError(self.bar_width, "bar_width cannot be less than 1")
         # calculate starting offset to ensure graph is centered within the border 
-        x_start = self.border_size + math.ceil(self.padding/2) + math.floor(self.bar_width/2)
+        x_start = self.border_size + math.ceil(self.padding/2) + self.bar_width//2
         x_offset = x_start + (2*self.bar_width)*position
         y_offset = self.image_height - self.border_size
-        line_offset = math.floor(self.bar_width/2)
+        line_offset = self.bar_width//2
         if value != 0:
             draw.line ([(x_offset - line_offset, y_offset),(x_offset - line_offset, y_offset - value)], fill=color, width=1)
             draw.line ([(x_offset + line_offset - 1, y_offset),(x_offset + line_offset - 1, y_offset - value)], fill=color, width=1)
