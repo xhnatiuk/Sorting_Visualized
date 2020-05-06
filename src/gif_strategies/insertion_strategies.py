@@ -6,6 +6,12 @@ class InsertionSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Insertion Sort
+
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
         """
         steps = []
         start = Change("color", ["sorted", 0])
@@ -35,6 +41,12 @@ class ShellSort(GifStrategy):
         """
         Fufuills the GifStrategy.generate_steps contract using Shell Sort
 
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
+
         TODO: implement
         """
         return NotImplementedError
@@ -43,6 +55,12 @@ class CubeSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Cube Sort
+
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
 
         TODO: implement
         """
@@ -53,6 +71,12 @@ class BinaryTreeSort(GifStrategy):
         """
         Fufuills the GifStrategy.generate_steps contract using Binary Tree Sort
 
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
+
         TODO: implement
         """
         return NotImplementedError
@@ -62,6 +86,12 @@ class CycleSort(GifStrategy):
         """
         Fufuills the GifStrategy.generate_steps contract using Cycle Sort
 
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
+
         TODO: implement
         """
         return NotImplementedError
@@ -70,6 +100,12 @@ class LibrarySort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Library Sort
+
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
 
         TODO: implement
         """

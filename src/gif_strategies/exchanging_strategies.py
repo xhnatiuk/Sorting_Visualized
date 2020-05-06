@@ -7,6 +7,12 @@ class BubbleSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Bubble Sort
+
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
         """
         steps = []
         num_sorted = 0
@@ -38,6 +44,12 @@ class CocktailSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Cocktail Sort
+
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
         """
         steps = []
         num_iterations = 0
@@ -85,6 +97,12 @@ class CombSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Comb Sort
+
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
         """
         steps = []
         # k is generaly 1.3 in comb sort
@@ -120,6 +138,12 @@ class GnomeSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Gnome Sort
+
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
         """
         steps = []
         i = 0
@@ -140,6 +164,12 @@ class OddEvenSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Odd-Even Sort
+
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
         """
         steps = []
         done = False

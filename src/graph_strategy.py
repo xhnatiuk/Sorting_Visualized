@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 
 class GraphStrategy(ABC):
     """
-    Interface that declares contract for concrete graph strategy classes
+    Interface that declares contract for concrete graph strategy classes.
     """
 
     @abstractmethod
@@ -25,7 +25,11 @@ class GraphStrategy(ABC):
 class Increasing(GraphStrategy):
     def generate_values(self, quantity: int, maximum: int) -> List[int]:
         """
-        Fufuills the GraphStrategy.generate_steps contract
+        Fufuills the GraphStrategy.generate_values contract.
+
+        Args:
+            quantity (int): the number of values to be generated.
+            maximum (int): the maximum permissible value size.
 
         Returns:
             values(List[int]): a increasing list of integers.
@@ -53,7 +57,11 @@ class Increasing(GraphStrategy):
 class Decreasing(GraphStrategy):
     def generate_values(self, quantity: int, maximum: int) -> List[int]:
         """
-        Fufuills the GraphStrategy.generate_steps contract
+        Fufuills the GraphStrategy.generate_values contract.
+
+        Args:
+            quantity (int): the number of values to be generated.
+            maximum (int): the maximum permissible value size.
 
         Returns:
             values(List[int]): a decreasing list of integers.
@@ -65,7 +73,11 @@ class Decreasing(GraphStrategy):
 class NearlySorted(GraphStrategy):
     def generate_values(self, quantity: int, maximum: int) -> List[int]:
         """
-        Fufuills the GraphStrategy.generate_steps contract
+        Fufuills the GraphStrategy.generate_values contract
+
+        Args:
+            quantity (int): the number of values to be generated.
+            maximum (int): the maximum permissible value size.
 
         Returns:
             values(List[int]): a nearly sorted list of integers.
@@ -90,7 +102,11 @@ class NearlySorted(GraphStrategy):
 class FewUnique(GraphStrategy):
     def generate_values(self, quantity: int, maximum: int) -> List[int]:
         """
-        Fufuills the GraphStrategy.generate_steps contract
+        Fufuills the GraphStrategy.generate_values contract
+
+        Args:
+            quantity (int): the number of values to be generated.
+            maximum (int): the maximum permissible value size.
 
         Returns:
             values(List[int]): a list of integers with many repeated values.
@@ -106,7 +122,11 @@ class FewUnique(GraphStrategy):
 class Random(GraphStrategy):
     def generate_values(self, quantity: int, maximum: int) -> List[int]:
         """
-        Fufuills the GraphStrategy.generate_steps contract
+        Fufuills the GraphStrategy.generate_values contract
+
+        Args:
+            quantity (int): the number of values to be generated.
+            maximum (int): the maximum permissible value size.
 
         Returns:
             values(List[int]): a random list of integers.

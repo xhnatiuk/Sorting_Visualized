@@ -5,16 +5,28 @@ from typing import List
 from .exceptions import InputError
 
 class ColorProfile:
+    """
+    Class for storing all the RGB color codes for drawing a bar graph.
+
+    Attributes:
+        background (int, int, int): the RGB color code for the background.
+        border (int, int, int): the RGB color code for the border.
+        bar (int, int, int): the RGB color code for the bar.
+        fade (int, int, int): the RGB color code for a faded bar.
+        finished (int, int, int): the RGB color code for the sorted bars.
+        cursor (int, int, int): the RGB color code for the cursor.
+    """
     def __init__(self, background: (int, int, int), border: (int, int, int), 
     bar: (int, int, int), fade: (int, int, int), finished: (int, int, int), cursor: (int, int, int)):
         """
         Constructor for ColorProfile class.
 
-        background (int, int, int): the RGB color code for the background.
-        border (int, int, int): the RGB color code for the border.
-        bar (int, int, int): the RGB color code for the bar.
-        finished (int, int, int): the RGB color code for the sorted bars.
-        cursor (int, int, int): the RGB color code for the cursor.
+        background (int, int, int): RGB color for thebackground.
+        border (int, int, int): RGB color for the border.
+        bar (int, int, int): RGB color for bars.
+        fade (int, int, int): RGB color for faded bars.
+        finished (int, int, int): RGB color for sorted bars.
+        cursor (int, int, int): RGB color for cursors.
         """
         self.background = background
         self.border = border
@@ -24,6 +36,19 @@ class ColorProfile:
         self.cursor = cursor
 
 class GraphIllustrator:
+    """
+    Class for drawing and editing bar graphs.
+
+    Attributes:
+        image_width (int): the width of the image in pixels
+        image_height (int): the  height of the image in pixels
+        border_size (int): the width of the border in pixels
+        num_bars (int): the number of bars in the graph
+        bar_width (int): the width of a bar in pixels
+        padding (int): the horizontal padding between the border and the first and last bars in pixels
+        colrs (ColorProfile): the object used to select colors for drawing
+    """
+
     def __init__(self, num_bars: int,  image_size: (int, int), border_size: int, colors: ColorProfile) -> None:
 
         """
@@ -52,7 +77,7 @@ class GraphIllustrator:
             color (int, int, int, int): RGB color code.
 
         Modifies:
-            the Image pertaining to draw.
+            draw: a color cursor is drawn onto the image associated with the drawing object.
 
         Returns:
             None.
@@ -82,14 +107,14 @@ class GraphIllustrator:
 
     def erase_cursor(self, position: int, draw: ImageDraw) -> None:
         """
-        erases the cursor on the image at the position.
+        Erases the cursor on the image at the position.
 
         Args:
             position (int): the index of the cursor.
             draw (ImageDraw): the drawing object.
         
         Modifies:
-            the Image pertaining to draw.
+            draw: a cursor is erased from the image associated with the drawing object.
 
         Returns:
             None.
@@ -98,7 +123,7 @@ class GraphIllustrator:
 
     def draw_bar(self, position: int, value: int, draw: ImageDraw, color: (int, int, int)) -> None:
         """
-        draws a color bar of the correct height on the image at the position.
+        Draws a color bar of the correct height on the image at the position.
 
         Args:
             position (int): the index of the bar.
@@ -107,17 +132,13 @@ class GraphIllustrator:
             color (int, int, int, int): RGB color code.
 
         Modifies:
-            the Image pertaining to draw.
+            draw: a bar is drawn onto the image associated with the drawing object.
 
         Raises:
             InputError: number of values is too large for the image size.
 
         Returns:
             None.
-
-        Notes:
-            values greater than (height - 2*border_width) will be drawn over the border and
-            capped at (height - border_width) since that is the uppermost edge of the image.
         """
         if position < 0 or position > (self.num_bars - 1):
             raise InputError((position), "invalid bar position")
@@ -136,16 +157,14 @@ class GraphIllustrator:
 
     def erase_bar(self, position: int, draw: ImageDraw) -> None:
         """
-        erases the bar on the image at the position.
+        Erases the bar on the image at the position.
 
         Args:
             position (int): the index of the bar.
-            value (int): the new bar value.
             draw (ImageDraw): the drawing object.
-            color (int, int, int, int): RGBA color code.
 
         Modifies:
-            the Image pertaining to draw.
+            draw: a bar is erased from the image associated with the drawing object.
 
         Returns:
             None.
@@ -183,7 +202,7 @@ class GraphIllustrator:
             InputError: number of values is too large for the image size.
         
         Modifies:
-            the Image pertaining to draw.
+            draw: a bar is drawn onto the image associated with the drawing object for each value in values.
 
         Returns:
             None.
@@ -193,13 +212,13 @@ class GraphIllustrator:
 
     def draw_border(self, draw: ImageDraw) -> None:
         """
-        Draws a 50% self._border_color border onto the image. Leaves the other half as self._background_color.
+        Draws a half self.colors.border, half self.colors.background border onto the image.
 
         Args:
             draw (ImageDraw): the drawing object.
             
         Modifies:
-            the Image pertaining to draw.
+            draw: a border is drawn onto the image associated with the drawing object.
 
         Returns:
             None.
@@ -216,7 +235,7 @@ class GraphIllustrator:
 
     def draw_graph(self, values: List[int], draw: ImageDraw) -> None:
         """
-        Draws a graph
+        Draws a bar graph of the values in values
 
         Args:
             values(List[int]): a list of values.
@@ -228,7 +247,7 @@ class GraphIllustrator:
                 * no values are passed.
 
         Modifies:
-            the Image pertaining to draw.
+            draw: a bar graph is drawn onto the image associated with the drawing object.
 
         Returns:
             None.

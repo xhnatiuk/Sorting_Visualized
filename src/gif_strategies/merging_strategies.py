@@ -6,6 +6,12 @@ class MergeSort(GifStrategy):
     def generate_steps(self, values: List[int], position: int = 0) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Merge Sort
+
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
         """
         return self.merge_sort(values, 0)[1]
         
@@ -113,6 +119,12 @@ class InPlaceMergeSort(GifStrategy):
         """
         Fufuills the GifStrategy.generate_steps contract using In-place Merge Sort
 
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
+
         TODO: implement
         """
         return NotImplementedError
@@ -121,6 +133,12 @@ class Quadsort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Quadsort
+
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
 
         TODO: implement
         """

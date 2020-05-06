@@ -2,41 +2,46 @@ from typing import List
 from PIL import Image, ImageDraw
 from .graph_strategy import GraphStrategy
 from .graph_illustrator import GraphIllustrator
-from .exceptions import InputError
+from .input_handler import InputError
 
 class GraphGenerator():
-    def __init__(self, strategy: GraphStrategy) -> None:
+    """
+    Object containing a GraphStrategy for PNG graph generation
 
+    Attributes:
+        strategy (GraphStrategy): GraphStrategy to be used for value generation.
+    """
+    
+    def __init__(self, strategy: GraphStrategy) -> None:
         """
-        Constructor for GraphGenerator class
+        Constructor for GraphGenerator class.
 
         Args:
-            strategy (GraphStrategy): an instance of a concrete GraphStrategy
+            strategy (GraphStrategy): an instance of a concrete GraphStrategy.
         """
         self._strategy = strategy
      
-
     def generate_graph(self, quantity: int, illustrator: GraphIllustrator, file_path: str) -> List[int]:
         """
-        generates and saves an image of a graph
+        Generates and saves an image of a graph.
         
         Args:
-            quantity (int): the number of bars on the graph
-            illustrator (Illustrator): the illistrator instance for the graph generation
-            file_path (string): the path relative to ./out to save the graph to
+            quantity (int): the number of bars on the graph.
+            illustrator (Illustrator): the illistrator instance for the graph generation.
+            file_path (str): the path relative to ./sorting_visualized to save the graph to.
 
         Modifies
-            ./out
+            ./sorting_visualized 
 
         Raises:
             InputError: 
-                *less than 1 value
-                *negative maximum value
-                *illustrator image size less than 1
-                *number of values is too large for the image size
+                - less than 1 value
+                - negative maximum value
+                - illustrator image size less than 1
+                - number of values is too large for the image size
 
         Returns:
-            values (List[int]): the values used in the generated graph
+            values (List[int]): the values in the generated graph.
         """
         if quantity < 1:
             raise InputError(quantity, "cannot generate graph with less than 1 value")
@@ -51,22 +56,22 @@ class GraphGenerator():
         graph.save(fp)
         return values
 
-def create_graph_base(width: (int), height: (int), background_color: (int, int, int, int)) -> Image:
+def create_graph_base(width: (int), height: (int), background_color: (int, int, int)) -> Image:
     """
-    creates a base image to draw a graph on
+    Creates a base image to draw a graph on.
     
     Args:
-        width (int): the width of the image in pixels
-        height (int): the width of the image in pixels
-        background_color (string): the RGBA color code for the background
+        width (int): the width of the image in pixels.
+        height (int): the width of the image in pixels.
+        background_color (str): the RGBA color code for the background.
 
     Raises:
-        InputError: image size less than 1
+        InputError: image size less than 1.
 
     Returns:
-        base (Image): the base for the graph
+        base (Image): the base for the graph.
     """
     if width < 1 or height < 1:
         raise InputError((width, height), "image size cannot be less than 1")
-    return Image.new("RGBA", (width, height), background_color)
+    return Image.new("RGB", (width, height), background_color)
         

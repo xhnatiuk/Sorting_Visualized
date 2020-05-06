@@ -8,15 +8,36 @@ from .gif_strategies.merging_strategies import MergeSort
 from .graph_generator import GraphGenerator
 from .gif_generator import GifGenerator
 
+# From Python Documentation exceptions example
+class InputError(Exception):
+    """
+    Exception raised for errors in the input.
+
+    Attributes:
+        expression (any): input expression in which the error occurred.
+        message (str): explanation of the error.
+    """
+
+    def __init__(self, expression, message: str):
+        """
+        Constructor for InputError class.
+
+        Args:
+            expression: input expression in which the error occurred.
+            message (str): explanation of the error.
+        """
+        self.expression = expression
+        self.message = message
+
 def select_color_profile(color: str)-> ColorProfile:
     """
     Selects the correct color profile.
 
     Args:
-        cp (string): one of the preset color profiles.
+        color (str): used to select a preset color profile (red, blue or green).
 
     Returns:
-        img_size (int): a positive integer representing width and height.
+        colors (ColorProfile): An instance of the correct ColorProfile.
     """
     background_color = (255, 255, 225)
     border_color = (0, 0, 0)
@@ -42,18 +63,15 @@ def select_color_profile(color: str)-> ColorProfile:
         }
     return switcher.get(color, None) 
 
-
-    return 
-
 def select_graph_strategy(code: str) -> GraphStrategy:
     """
     Instantiates the correct GraphStrategy.
 
     Args:
-        code (string): one of the preset strategy codes.
+        code (str): one of the preset strategy codes.
 
     Returns:
-        strategy(GraphStrategy): A instance of the correct GraphStrategy.
+        strategy (GraphStrategy): An instance of the correct GraphStrategy.
     """
     switcher = {
         "increasing": Increasing(),
@@ -69,10 +87,10 @@ def select_gif_strategy(code: str) -> GraphStrategy:
     Instantiates the correct GifStrategy.
 
     Args:
-        code (string): one of the preset strategy codes.
+        code (str): one of the preset strategy codes.
 
     Returns:
-        strategy(GifStrategy): A instance of the correct GifStrategy.
+        strategy (GifStrategy): An instance of the correct GifStrategy.
     """
     switcher = {
         "selection": SelectionSort(),
@@ -91,12 +109,13 @@ def handle_input(args) -> None:
     Transforms command line inputs into the specififed graph.
 
     Args:
-        args (Namespace): object holding parsed command line attributes
+        args (Namespace): object holding parsed command line attributes.
+
+    Modifies:
+        ./sorting_visualized: saves a .png and a .gif to the filepath in args.
 
     Raises:
-        InputError: 
-            * num_values < 1.
-            * number of values is too large for the image size
+        InputError
 
     Returns:
         None.

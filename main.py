@@ -4,6 +4,12 @@ import dataclasses
 from src.input_handler import handle_input
 
 def init_argparse() -> argparse.ArgumentParser:
+    """
+    Creates an ArgumentParser that deals with each positional and optional argument appropriately.
+
+    Returns:
+        parser (ArgumentParser): a command line argument parser
+    """
     parser = argparse.ArgumentParser(
         prog="Sorting Visualized",
         usage="%(prog)s [OPTION] [FILE]...",
@@ -56,6 +62,15 @@ def init_argparse() -> argparse.ArgumentParser:
 def main() -> None:
     """
     Parses user inputs to appropriate processing functions
+
+    Modifies:
+        ./sorting_visualized: saves a .png and a .gif to the filepath in args.
+
+    Raises:
+        InputError
+
+    Returns:
+        None.
     """
     parser = init_argparse()
     args = parser.parse_args()

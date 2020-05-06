@@ -5,6 +5,12 @@ class SelectionSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Selection Sort
+
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
         """
         steps = []
         for i in range (len(values)):
@@ -27,6 +33,12 @@ class Heapsort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Heapsort
+
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
         
         TODO: implement
         """
@@ -36,6 +48,12 @@ class Smoothsort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Smoothsort
+
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
 
         TODO: implement
         """
@@ -47,6 +65,12 @@ class Strandsort(GifStrategy):
         """
         Fufuills the GifStrategy.generate_steps contract using Strandsort
 
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
+
         TODO: implement
         """
         return NotImplementedError
@@ -55,6 +79,12 @@ class TournamentSort(GifStrategy):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Tournament Sort
+
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Returns:
+            steps (List[Step]): the steps used in sorting.
 
         TODO: implement
         """
