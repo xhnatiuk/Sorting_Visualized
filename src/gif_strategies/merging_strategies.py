@@ -1,6 +1,6 @@
 import math
 from typing import List
-from src.gif_strategy import *
+from src.gif_generator import GifStrategy, Step, Change
 
 class MergeSort(GifStrategy):
     def generate_steps(self, values: List[int], position: int = 0) -> List[Step]:

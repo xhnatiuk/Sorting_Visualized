@@ -7,27 +7,7 @@ from .gif_strategies.exchanging_strategies import BubbleSort, CocktailSort, Comb
 from .gif_strategies.merging_strategies import MergeSort
 from .graph_generator import GraphGenerator
 from .gif_generator import GifGenerator
-
-# From Python Documentation exceptions example
-class InputError(Exception):
-    """
-    Exception raised for errors in the input.
-
-    Attributes:
-        expression (any): input expression in which the error occurred.
-        message (str): explanation of the error.
-    """
-
-    def __init__(self, expression, message: str):
-        """
-        Constructor for InputError class.
-
-        Args:
-            expression: input expression in which the error occurred.
-            message (str): explanation of the error.
-        """
-        self.expression = expression
-        self.message = message
+from .exceptions import InputError
 
 def select_color_profile(color: str)-> ColorProfile:
     """

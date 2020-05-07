@@ -4,8 +4,7 @@ from src.gif_strategies.insertion_strategies import InsertionSort
 from src.gif_strategies.exchanging_strategies import BubbleSort, CocktailSort, CombSort, OddEvenSort, GnomeSort
 from src.gif_strategies.merging_strategies import MergeSort
 from src.graph_illustrator import GraphIllustrator
-from src.gif_generator import GifGenerator
-from src.gif_strategy import GifStrategy
+from src.gif_generator import GifStrategy, GifGenerator
 from typing import List
 
 OUTPUT_FILEPATH = "./out/images/tests/gif_generator/"

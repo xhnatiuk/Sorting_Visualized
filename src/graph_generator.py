@@ -2,7 +2,7 @@ from typing import List
 from PIL import Image, ImageDraw
 from .graph_strategy import GraphStrategy
 from .graph_illustrator import GraphIllustrator
-from .input_handler import InputError
+from .exceptions import InputError
 
 class GraphGenerator():
     """

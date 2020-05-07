@@ -1,5 +1,5 @@
 from typing import List
-from src.gif_strategy import GifStrategy, Step, Change
+from src.gif_generator import GifStrategy, Step, Change
 from copy import copy
 from numpy import math
 

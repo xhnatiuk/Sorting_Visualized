@@ -4,49 +4,6 @@ from typing import List
 from copy import copy
 from PIL import Image, ImageDraw
 
-class GifStrategy(ABC):
-    """
-    Interface that declares contract for concrete gif strategy classes.
-    """
-
-    @abstractmethod
-    def generate_steps(self, values: List[int]) -> List[Step]:
-        """
-        Sorts the values and returns a list of the steps used.
-        
-        Args:
-            values (List[int]): the values to be sorted.
-
-        Modifies:
-            values: sorts the list in increasing order.
-            
-        Returns:
-            steps(List[Step]): the list of steps used.
-        """
-        pass
-
-class Step:
-    """
-    Object for tracking steps taken while sorting a list.
-
-    Attributes:
-        position (int): the index of the value being considered in the current step.
-        changes (List[Change]): a list of 0 or more changes applied in the current step.
-    """
-    position: int
-    changes: List[Change]
-
-    def __init__(self, position: int, changes: List[Change] = None):
-        """
-        Constructor for Step class.
-
-        Args:
-            position (int): the index of the value being considered.
-            changes (List[Change]): a list of 0 or more changes applied.
-        """
-        self.position = position
-        self.changes = changes 
-
 class Change:
     """
     Class for defining changes that have taken place during sorting. 
@@ -76,6 +33,49 @@ class Change:
         """
         self.indentifier = indentifier
         self.involved = involved 
+
+class Step:
+    """
+    Object for tracking steps taken while sorting a list.
+
+    Attributes:
+        position (int): the index of the value being considered in the current step.
+        changes (List[Change]): a list of 0 or more changes applied in the current step.
+    """
+    position: int
+    changes: List[Change]
+
+    def __init__(self, position: int, changes: List[Change] = None):
+        """
+        Constructor for Step class.
+
+        Args:
+            position (int): the index of the value being considered.
+            changes (List[Change]): a list of 0 or more changes applied.
+        """
+        self.position = position
+        self.changes = changes 
+
+class GifStrategy(ABC):
+    """
+    Interface that declares contract for concrete gif strategy classes.
+    """
+
+    @abstractmethod
+    def generate_steps(self, values: List[int]) -> List[Step]:
+        """
+        Sorts the values and returns a list of the steps used.
+        
+        Args:
+            values (List[int]): the values to be sorted.
+
+        Modifies:
+            values: sorts the list in increasing order.
+            
+        Returns:
+            steps(List[Step]): the list of steps used.
+        """
+        pass
 
 class GifGenerator():
     """
@@ -185,7 +185,7 @@ class GifGenerator():
         """
         method_name = "apply_" + str(change.indentifier)
         method = getattr(self, method_name)
-        return method(values, change.invovled, draw)
+        return method(values, change.involved, draw)
     
     def apply_draw(self, values:List[int], involved: List[int], draw: ImageDraw) -> None:
         """
