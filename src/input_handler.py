@@ -1,4 +1,3 @@
-from typing import List
 from .graph_illustrator import ColorProfile, GraphIllustrator
 from .graph_strategy import *
 from .gif_strategies.selection_strategies import SelectionSort
@@ -7,9 +6,9 @@ from .gif_strategies.exchanging_strategies import BubbleSort, CocktailSort, Comb
 from .gif_strategies.merging_strategies import MergeSort
 from .graph_generator import GraphGenerator
 from .gif_generator import GifGenerator
-from .exceptions import InputError
 
-def select_color_profile(color: str)-> ColorProfile:
+
+def select_color_profile(color: str) -> ColorProfile:
     """
     Selects the correct color profile.
 
@@ -37,11 +36,19 @@ def select_color_profile(color: str)-> ColorProfile:
     green_sorted_color = (48, 109, 50)
     green_fade_color = (188, 225, 189)
     switcher = {
-        "red": ColorProfile(background_color, border_color, red_bar_color, red_fade_color, red_sorted_color, red_cursor_color),
-        "blue": ColorProfile(background_color, border_color, blue_bar_color, blue_fade_color, blue_sorted_color, blue_cursor_color),
-        "green": ColorProfile(background_color, border_color, green_bar_color, green_fade_color, green_sorted_color, green_cursor_color),
-        }
-    return switcher.get(color, None) 
+        "red":
+            ColorProfile(background_color, border_color, red_bar_color,
+                         red_fade_color, red_sorted_color, red_cursor_color),
+        "blue":
+            ColorProfile(background_color, border_color, blue_bar_color,
+                         blue_fade_color, blue_sorted_color, blue_cursor_color),
+        "green":
+            ColorProfile(background_color, border_color, green_bar_color,
+                         green_fade_color, green_sorted_color,
+                         green_cursor_color),
+    }
+    return switcher.get(color, None)
+
 
 def select_graph_strategy(code: str) -> GraphStrategy:
     """
@@ -59,8 +66,9 @@ def select_graph_strategy(code: str) -> GraphStrategy:
         "nearly": NearlySorted(),
         "few": FewUnique(),
         "random": Random(),
-        }
-    return switcher.get(code, None) 
+    }
+    return switcher.get(code, None)
+
 
 def select_gif_strategy(code: str) -> GraphStrategy:
     """
@@ -81,8 +89,9 @@ def select_gif_strategy(code: str) -> GraphStrategy:
         "gnome": GnomeSort(),
         "oddeven": OddEvenSort(),
         "merge": MergeSort(),
-        }
-    return switcher.get(code, None) 
+    }
+    return switcher.get(code, None)
+
 
 def handle_input(args) -> None:
     """
@@ -101,10 +110,13 @@ def handle_input(args) -> None:
         None.
     """
     colors = select_color_profile(args.color)
-    illustrator = GraphIllustrator(args.quantity, (args.dimension, args.dimension), args.border, colors)
+    illustrator = GraphIllustrator(args.quantity,
+                                   (args.dimension, args.dimension),
+                                   args.border, colors)
     graph_strategy = select_graph_strategy(args.input)
     graph_generator = GraphGenerator(graph_strategy)
-    values = graph_generator.generate_graph(args.quantity, illustrator, args.path)
+    values = graph_generator.generate_graph(args.quantity, illustrator,
+                                            args.path)
     gif_strategy = select_gif_strategy(args.algorithm)
     gif_generator = GifGenerator(gif_strategy, illustrator)
     gif_generator.generate_gif(values, args.path, args.speed)

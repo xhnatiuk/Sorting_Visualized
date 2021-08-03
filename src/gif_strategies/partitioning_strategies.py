@@ -1,7 +1,9 @@
 from typing import List
-from src.gif_generator import GifStrategy, Step, Change
+from src.gif_generator import GifStrategy, Step
+
 
 class Introsort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Introsort
@@ -16,7 +18,9 @@ class Introsort(GifStrategy):
         """
         return NotImplementedError
 
+
 class Quicksort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Quicksort
@@ -31,7 +35,9 @@ class Quicksort(GifStrategy):
         """
         return NotImplementedError
 
+
 class Quicksort3(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Quicksort3

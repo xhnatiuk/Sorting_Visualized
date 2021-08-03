@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from .graph_illustrator import GraphIllustrator
-from typing import List
-from copy import copy
+from typing import List, Tuple
 from PIL import Image, ImageDraw
+
 
 class Change:
     """
@@ -14,10 +14,13 @@ class Change:
                 overlay - a value at a single index will be changed.
                 exchange - values at two different indicies were swapped.
                 add_cursor - values were considered at 1 or more indicies.
-                remove_cursor - values were no longer being considered at 1 or more indicies.
+                remove_cursor - values were no longer being considered at 1 or
+                more indicies.
                 color - values were re-colored at 0 or more indicies.
-            involved (List[int]): values involved in a change. See GifGenerator.apply_<indentifier>
-                for information on how the invovled list should be used for each identifier.
+            involved (List[int]): values involved in a change. See
+            GifGenerator.apply_<indentifier>
+                for information on how the invovled list should be used for
+                each identifier.
     """
     indentifier: str
     involved: List[int]
@@ -32,15 +35,18 @@ class Change:
             
         """
         self.indentifier = indentifier
-        self.involved = involved 
+        self.involved = involved
+
 
 class Step:
     """
     Object for tracking steps taken while sorting a list.
 
     Attributes:
-        position (int): the index of the value being considered in the current step.
-        changes (List[Change]): a list of 0 or more changes applied in the current step.
+        position (int): the index of the value being considered in the current
+        step.
+        changes (List[Change]): a list of 0 or more changes applied in the
+        current step.
     """
     position: int
     changes: List[Change]
@@ -54,7 +60,8 @@ class Step:
             changes (List[Change]): a list of 0 or more changes applied.
         """
         self.position = position
-        self.changes = changes 
+        self.changes = changes
+
 
 class GifStrategy(ABC):
     """
@@ -77,28 +84,36 @@ class GifStrategy(ABC):
         """
         pass
 
+
 class GifGenerator():
     """
-    Object containing a GifStrategy and a GrahIllustrator for GIF file generation
+    Object containing a GifStrategy and a GrahIllustrator for GIF file
+    generation
 
     Attributes:
-        illustrator (GraphIllustrator): GraphIllustrator used for frame drawing.
+        illustrator (GraphIllustrator): GraphIllustrator used for frame
+        drawing.
         strategy (GifStrategy): GifStrategy to be used for step generation.
     """
-    def __init__(self, strategy: GifStrategy, illustrator = GraphIllustrator) -> None:
+
+    def __init__(self,
+                 strategy: GifStrategy,
+                 illustrator=GraphIllustrator) -> None:
         """
         Constructor for GifGenerator class.
 
         Args:
             strategy (GifStrategy): concrete GifStrategy to be used.
-            illustrator (GraphIllustrator): concrete GraphIllustrator to be used.
+            illustrator (GraphIllustrator): concrete GraphIllustrator to be
+            used.
         """
         self.illustrator = illustrator
         self.strategy = strategy
-      
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
-        Delegates work to the GifStrategy and returns the steps used in sorting.
+        Delegates work to the GifStrategy and returns the steps used in
+        sorting.
 
         Args:
             values (List[int]): the values to be sorted.
@@ -109,13 +124,16 @@ class GifGenerator():
         sorting_list = values.copy()
         return self.strategy.generate_steps(sorting_list)
 
-    def generate_gif(self, values: List[int], file_path: str, speed: int) -> None:
+    def generate_gif(self, values: List[int], file_path: str,
+                     speed: int) -> None:
         """
-        Generates a GIF with frames corresponding to the steps taken by the GifGenerator's sorting strategy.
+        Generates a GIF with frames corresponding to the steps taken by the
+        GifGenerator's sorting strategy.
 
         Args:
             values (List[int]): the list of values in the bar graph.
-            file_path (str): the location where the png that the gif will be based off of is stored,
+            file_path (str): the location where the png that the gif will be
+            based off of is stored,
                 and where the gif willl be stored.
             speed (int): the duration of each frame in centiseconds.
         
@@ -143,11 +161,16 @@ class GifGenerator():
             last_frame = frame.copy()
             draw = ImageDraw.Draw(last_frame)
             self.illustrator.erase_cursor(step.position, draw)
-        gif.save(file_path, save_all=True, append_images=frames, duration=speed*10)
+        gif.save(file_path,
+                 save_all=True,
+                 append_images=frames,
+                 duration=speed * 10)
 
-    def generate_frame(self, values: List[int], step: Step, frame: Image) -> None:
+    def generate_frame(self, values: List[int], step: Step,
+                       frame: Image) -> None:
         """
-        Edits the frame to display the changes in Step, performs any changes on values.
+        Edits the frame to display the changes in Step, performs any changes
+        on values.
 
         Args:
             values (List[int]): the list of values displayed in frame.
@@ -162,23 +185,27 @@ class GifGenerator():
             None.
         """
         draw = ImageDraw.Draw(frame)
-        self.illustrator.draw_cursor(step.position, draw, self.illustrator.colors.cursor)
+        self.illustrator.draw_cursor(step.position, draw,
+                                     self.illustrator.colors.cursor)
         if step.changes:
             for change in step.changes:
                 self.change_dispatch(change, values, draw)
 
-    def change_dispatch(self, change: Change, values:List[int], draw: ImageDraw) -> None:
+    def change_dispatch(self, change: Change, values: List[int],
+                        draw: ImageDraw) -> None:
         """
         Calls the appropriate function for the given change code.
 
         Args:
-            change (Change): object containing the change identifier and involved values.
+            change (Change): object containing the change identifier and
+            involved values.
             values (List[int]): the list of values displayed in frame.
             draw (ImageDraw): the drawing object.
 
         Modifies:
             values: values may be changed or moved.
-            draw: the image associated with the drawing object is updated with the appropriate changes.
+            draw: the image associated with the drawing object is updated with
+            the appropriate changes.
 
         Returns:
             None.
@@ -186,10 +213,12 @@ class GifGenerator():
         method_name = "apply_" + str(change.indentifier)
         method = getattr(self, method_name)
         return method(values, change.involved, draw)
-    
-    def apply_draw(self, values:List[int], involved: List[int], draw: ImageDraw) -> None:
+
+    def apply_draw(self, values: List[int], involved: List[int],
+                   draw: ImageDraw) -> None:
         """
-        Draws a bar on the image at involved[0] with value involved[1], updates values accordingly. 
+        Draws a bar on the image at involved[0] with value involved[1],
+        updates values accordingly.
 
         Args:
             values (List[int]): the list of values displayed in frame.
@@ -198,7 +227,9 @@ class GifGenerator():
 
         Modifies:
             values: the value at index involved[0] is set to involved[1].
-            draw: the bar at index involved[0] is erased and replaced with a bar of value involved[1] on image associated with the drawing object.
+            draw: the bar at index involved[0] is erased and replaced with a
+            bar of value involved[1] on image associated with the drawing
+            object.
 
         Returns:
             None.
@@ -207,33 +238,42 @@ class GifGenerator():
         value = involved[1]
         print(index)
         self.illustrator.erase_bar(index, draw)
-        self.illustrator.draw_bar(index, value, draw, self.illustrator.colors.bar)
+        self.illustrator.draw_bar(index, value, draw,
+                                  self.illustrator.colors.bar)
         values[index] = value
 
-    def apply_overlay(self, values:List[int], involved: List[int], draw: ImageDraw) -> None:
+    def apply_overlay(self, values: List[int], involved: List[int],
+                      draw: ImageDraw) -> None:
         """
-        Draws a bar-outline on the image at involved[0] with value involved[1], updates values accordingly. 
+        Draws a bar-outline on the image at involved[0] with value involved[1],
+        updates values accordingly.
 
         Args:
             values (List[int]): the list of values displayed in frame.
-            involved (List[int]): the index and value for the bar-outline to be drawn.
+            involved (List[int]): the index and value for the bar-outline to
+            be drawn.
             draw (ImageDraw): the drawing object.
 
         Modifies:
             values: the value at index involved[0] is set to involved[1].
-            draw: a bar outline with value involved[1] is drawn over top of the bar at index involved[0] on image associated with the drawing object.
+            draw: a bar outline with value involved[1] is drawn over top of
+            the bar at index involved[0] on image associated with the drawing
+            object.
 
         Returns:
             None.
         """
         index = involved[0]
         value = involved[1]
-        self.illustrator.draw_bar_outline(index, value, draw, self.illustrator.colors.finished)
+        self.illustrator.draw_bar_outline(index, value, draw,
+                                          self.illustrator.colors.finished)
         values[index] = value
-                    
-    def apply_exchange(self, values: List[int], involved: List[int], draw: ImageDraw) -> None:
+
+    def apply_exchange(self, values: List[int], involved: List[int],
+                       draw: ImageDraw) -> None:
         """
-        Swaps the bars on the image at involved[0] and involved[1], updates values accordingly. 
+        Swaps the bars on the image at involved[0] and involved[1], updates
+        values accordingly.
 
         Args:
             values (List[int]): the list of values displayed in frame.
@@ -241,8 +281,10 @@ class GifGenerator():
             draw (ImageDraw): the drawing object.
 
         Modifies:
-            values: the value at index involved[0] is swapped with the value at index invovled[1].
-            draw: the bars at index involved[0]  and involved[1] are swapped on image associated with the drawing object.
+            values: the value at index involved[0] is swapped with the value
+            at index invovled[1].
+            draw: the bars at index involved[0]  and involved[1] are swapped
+            on image associated with the drawing object.
 
         Returns:
             None.
@@ -254,7 +296,8 @@ class GifGenerator():
         self.apply_draw(values, [index_1, value_2], draw)
         self.apply_draw(values, [index_2, value_1], draw)
 
-    def apply_add_cursor(self, values: List[int], involved: List[int], draw: ImageDraw) -> None:
+    def apply_add_cursor(self, values: List[int], involved: List[int],
+                         draw: ImageDraw) -> None:
         """
         Draws a cursor on the image at every index listed in involved. 
 
@@ -264,17 +307,20 @@ class GifGenerator():
             draw (ImageDraw): the drawing object.
 
         Modifies:
-            draw: cursors are drawn on image associated with the drawing object at every index listed in involved.
+            draw: cursors are drawn on image associated with the drawing
+            object at every index listed in involved.
 
         Returns:
             None.
         """
         for i in involved:
-                self.illustrator.draw_cursor(i, draw, self.illustrator.colors.cursor)
+            self.illustrator.draw_cursor(i, draw,
+                                         self.illustrator.colors.cursor)
 
-    def apply_remove_cursor(self, values: List[int], involved: List[int], draw: ImageDraw) -> None:
+    def apply_remove_cursor(self, values: List[int], involved: List[int],
+                            draw: ImageDraw) -> None:
         """
-        Erases a cursor on the image at every index listed in involved. 
+        Erases a cursor on the image at every index listed in involved.
 
         Args:
             values (List[int]): the list of values displayed in frame.
@@ -282,7 +328,8 @@ class GifGenerator():
             draw (ImageDraw): the drawing object.
 
         Modifies:
-            draw: cursors are erased on image associated with the drawing object at every index listed in involved.
+            draw: cursors are erased on image associated with the drawing
+            object at every index listed in involved.
 
         Returns:
             None.
@@ -290,17 +337,22 @@ class GifGenerator():
         for i in involved:
             self.illustrator.erase_cursor(i, draw)
 
-    def apply_color(self, values:List[int], involved: List[int], draw: ImageDraw) -> None:
+    def apply_color(self, values: List[int], involved: List[int],
+                    draw: ImageDraw) -> None:
         """
-        Re-draws all bars at indicies in involved[1:] on the image with the color specified in involved[0]. 
+        Re-draws all bars at indicies in involved[1:] on the image with the
+        color specified in involved[0].
 
         Args:
             values (List[int]): the list of values displayed in frame.
-            involved (List[int]): the color code and indicies of re-coloring bars.
+            involved (List[int]): the color code and indicies of re-coloring
+            bars.
             draw (ImageDraw): the drawing object.
 
         Modifies:
-            draw:  all bars at indicies in involved[1:] are erased and re-drawn with the selected color on image associated with the drawing object.
+            draw:  all bars at indicies in involved[1:] are erased and
+            re-drawn with the selected color on image associated with the
+            drawing object.
 
         Returns:
             None.
@@ -311,9 +363,10 @@ class GifGenerator():
             self.illustrator.erase_bar(index, draw)
             self.illustrator.draw_bar(index, values[index], draw, color)
 
-    def select_color(self, code: str) -> (int, int, int):
+    def select_color(self, code: str) -> Tuple[int, int, int]:
         """
-        Selects the correct color from the GraphIllustrator's ColorProfile based on the code.
+        Selects the correct color from the GraphIllustrator's ColorProfile
+        based on the code.
 
         Args:
             code (str): one of the color options (sorted, fade, or bar).
@@ -326,4 +379,4 @@ class GifGenerator():
             "fade": self.illustrator.colors.fade,
             "bar": self.illustrator.colors.bar,
         }
-        return switcher.get(code, None) 
+        return switcher.get(code, None)

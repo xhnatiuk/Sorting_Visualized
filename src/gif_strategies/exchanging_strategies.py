@@ -3,7 +3,9 @@ from src.gif_generator import GifStrategy, Step, Change
 from copy import copy
 from numpy import math
 
+
 class BubbleSort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Bubble Sort
@@ -31,8 +33,8 @@ class BubbleSort(GifStrategy):
                 # bubble-up value i
                 if values[i] > values[i + 1]:
                     values[i], values[i + 1] = values[i + 1], values[i]
-                    exchange = Change("exchange", [i, i+1])
-                    steps.append(Step(i+1, [exchange]))
+                    exchange = Change("exchange", [i, i + 1])
+                    steps.append(Step(i + 1, [exchange]))
                     exchange_occurred = True
         sorted_vals = list(range(0, len(values)))
         sorted_vals.insert(0, "sorted")
@@ -40,7 +42,9 @@ class BubbleSort(GifStrategy):
         steps.append(Step(0, [copy(sort)]))
         return steps
 
+
 class CocktailSort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Cocktail Sort
@@ -58,30 +62,31 @@ class CocktailSort(GifStrategy):
             exchange_occurred = False
 
             # bubble forwards
-            for i in range(num_iterations, len(values)-1-num_iterations):
-                if values[i] > values[i+1]:
-                    values[i], values[i+1] = values[i+1], values[i]
+            for i in range(num_iterations, len(values) - 1 - num_iterations):
+                if values[i] > values[i + 1]:
+                    values[i], values[i + 1] = values[i + 1], values[i]
                     exchange_occurred = True
-                    exchange = Change("exchange", [i, i+1])
+                    exchange = Change("exchange", [i, i + 1])
                     steps.append(Step(i, [exchange]))
                 else:
                     steps.append(Step(i))
-            last_sorted = len(values)-1 -num_iterations
+            last_sorted = len(values) - 1 - num_iterations
             end_sort = Change("color", ["sorted", last_sorted])
             steps.append(Step(last_sorted, [end_sort]))
-            
+
             # if no exchange occured values are sorted
             if not exchange_occurred:
                 break
 
-            # bubble backwards 
+            # bubble backwards
             exchange_occurred = False
-            for i in range(len(values)-2-num_iterations, num_iterations-1, -1):
-                if values[i] > values[i+1]:
-                    values[i], values[i+1] = values[i+1], values[i]
+            for i in range(
+                    len(values) - 2 - num_iterations, num_iterations - 1, -1):
+                if values[i] > values[i + 1]:
+                    values[i], values[i + 1] = values[i + 1], values[i]
                     exchange_occurred = True
-                    exchange = Change("exchange", [i, i+1])
-                    steps.append(Step(i+1, [exchange]))
+                    exchange = Change("exchange", [i, i + 1])
+                    steps.append(Step(i + 1, [exchange]))
                 else:
                     steps.append(Step(i))
             start_sort = Change("color", ["sorted", num_iterations])
@@ -93,7 +98,9 @@ class CocktailSort(GifStrategy):
         steps.append(Step(0, [copy(sort)]))
         return steps
 
+
 class CombSort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Comb Sort
@@ -109,24 +116,23 @@ class CombSort(GifStrategy):
         shrink = 1.3
         gap = len(values)
         exchange_occurred = True
-        num_iterations = 0
         while exchange_occurred:
             gap /= shrink
             gap = math.floor(gap)
             if gap <= 1:
                 exchange_occurred = False
                 gap = 1
-            for i in range (len(values) - gap):
-                remove_cursor = Change("remove_cursor", [i+gap-1])
-                add_cursor = Change("add_cursor", [i+gap])
+            for i in range(len(values) - gap):
+                remove_cursor = Change("remove_cursor", [i + gap - 1])
+                add_cursor = Change("add_cursor", [i + gap])
                 steps.append(Step(i, [remove_cursor, add_cursor]))
                 if values[i] > values[i + gap]:
-                    values[i], values[i+ gap] = values[i + gap], values[i]
-                    exchange = Change("exchange", [i, i+gap])
+                    values[i], values[i + gap] = values[i + gap], values[i]
+                    exchange = Change("exchange", [i, i + gap])
                     steps.append(Step(i, [exchange]))
                     exchange_occurred = True
                 if i == len(values) - gap - 1:
-                    remove_final_cursor = Change("remove_cursor", [i+gap])
+                    remove_final_cursor = Change("remove_cursor", [i + gap])
                     steps.append(Step(i, [remove_final_cursor]))
         sorted_vals = list(range(0, len(values)))
         sorted_vals.insert(0, "sorted")
@@ -134,7 +140,9 @@ class CombSort(GifStrategy):
         steps.append(Step(0, [copy(sort)]))
         return steps
 
+
 class GnomeSort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Gnome Sort
@@ -148,19 +156,21 @@ class GnomeSort(GifStrategy):
         steps = []
         i = 0
         while i < len(values):
-            if (i == 0 or values[i] >= values[i-1]):
+            if (i == 0 or values[i] >= values[i - 1]):
                 sort = Change("color", ["sorted", i])
                 steps.append(Step(i, [sort]))
                 i += 1
             else:
-                values[i], values[i-1] = values[i-1], values[i]
-                exchange = Change("exchange", [i, i-1])
+                values[i], values[i - 1] = values[i - 1], values[i]
+                exchange = Change("exchange", [i, i - 1])
                 sort = Change("color", ["sorted", i])
-                steps.append(Step(i-1, [exchange, sort]))
+                steps.append(Step(i - 1, [exchange, sort]))
                 i -= 1
         return steps
 
+
 class OddEvenSort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Odd-Even Sort
@@ -175,18 +185,18 @@ class OddEvenSort(GifStrategy):
         done = False
         while not done:
             done = True
-            for i in range (1, len(values)-1, 2):
-                if values[i] > values [i+1]:
-                    values[i], values[i+1] = values[i+1], values[i]
-                    exchange = Change("exchange", [i, i+1])
+            for i in range(1, len(values) - 1, 2):
+                if values[i] > values[i + 1]:
+                    values[i], values[i + 1] = values[i + 1], values[i]
+                    exchange = Change("exchange", [i, i + 1])
                     steps.append(Step(i, [exchange]))
                     done = False
                 else:
                     steps.append(Step(i))
-            for i in range (0, len(values)-1, 2):
-                if values[i] > values [i+1]:
-                    values[i], values[i+1] = values[i+1], values[i]
-                    exchange = Change("exchange", [i, i+1])
+            for i in range(0, len(values) - 1, 2):
+                if values[i] > values[i + 1]:
+                    values[i], values[i + 1] = values[i + 1], values[i]
+                    exchange = Change("exchange", [i, i + 1])
                     steps.append(Step(i, [exchange]))
                     done = False
                 else:

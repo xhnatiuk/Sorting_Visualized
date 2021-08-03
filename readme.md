@@ -1,128 +1,65 @@
 # CLI GIF Generator
-A command line python app for generating bar chart graph visualizations of sorting algorithms. 
+
+A command line python app for generating bar chart graph visualizations of sorting algorithms.
 
 how to use:
+
 1. navigate to the root folder (sorting_visualized)
 2. run `python3 ./main algorithim`
 3. find output in ./out/images
 
 ## Positional Arguments
+
 `algorithim`: sorting algorithm for the animation, one of
-* selection
-* insertion
-* bubble
-* cocktail
-* comb
-* gnome
-* oddeven
-* merge
+
+- selection
+- insertion
+- bubble
+- cocktail
+- comb
+- gnome
+- oddeven
+- merge
 
 ## Optional Arguements
+
 `-q, --quantity`: number of values to be generated, must be within [0, 100]
-* 10 (default)
+
+- 10 (default)
 
 `-i, --input`: pattern for generating the input list, one of
-* increasing
-* decreasing (default)
-* nearly sorted
-* few unique
-* random
+
+- increasing
+- decreasing (default)
+- nearly sorted
+- few unique
+- random
 
 `-d, --dimensions`: dimension (in pixels) for the animation (width & height)
-* 500 (default)
+
+- 500 (default)
 
 `-b, --border`: width (in pixels), for the border of the animation
-* 25 (default)
 
-`-c, --color`: colors for the animation, one of 
-* red
-* blue (default) 
-* green
+- 25 (default)
+
+`-c, --color`: colors for the animation, one of
+
+- red
+- blue (default)
+- green
 
 `-s, --speed`: number of frames for each step of the animation, must be within [0, 100]
-* 1 (default)
+
+- 1 (default)
 
 `-p, --path`: the file path and name relative to sorting_visualized/
-* ./out/images/gif (default)
 
-# Sorting Algorithms
-1. Do a little write up on each sort
-2. Category meanings
-4. Individualized Sorting Theories
-5. Time complexity
-6. Space complexity
-7. Stability
-
-## Comparison Sorts
-### Selection
-#### Selection Sort
-#### Heapsort
-#### Smoothsort
-#### Strandsort
-#### Tournament Sort
-
-### Partioning
-#### Introsort (Partion & Selection)
-#### Quicksort
-#### Quicksort3
-
-### Merging
-#### Merge Sort
-#### In-place Merge Sort
-#### Quadsort
-
-### Insertion
-#### Insertion Sort
-#### Shell Sort
-#### Cube Sort
-#### Binary Tree Sort
-#### Cycle Sort
-#### Library Sort
-#### Patience Sort (Insertion & Selection)
-#### Block Sort    (Insertion & Merging)
-#### Timsort       (Insertion & Merging)
-
-### Exchanging
-#### Bubble Sort
-#### Cocktail Sort
-#### Comb Sort
-#### Gnome Sort
-#### Odd-Even Sort
-
-### Other
-#### Unshuffle Sort (Distribution & Merge)
-#### Franceschini's Method (Uncategorized?)
-
-
-# Extension  Ideas
-Sorting approximation, partial sorting, different visuals (scatterplot, different colored pixels)
-
-## Non-Comparison Sorts
-#### Stable
-* Pigeonhole Sort
-* Bucket Sort (uniform keys)
-* Bucket Sort (integer keys)
-* Counting Sort
-* LSD Radix Sort
-* MSD Radix Sort
-
-#### Unstable
-* MSD Radix Sort (in-place)
-* Spreadsort
-* Burstsort
-* Flashsort
-* Postman Sort
-
-### Other
-* Bead Sort
-* Pancake Sort
-* Sorting Network
-* Bitonic Sorter
-* Han's Algorithm
-* Thorup's Algorithm
+- ./out/images/gif (default)
 
 # Documentation
-## src.gif\_generator
+
+## src.gif_generator
 
 ### Change
 
@@ -141,7 +78,7 @@ Class for defining changes that have taken place during sorting.
   add_cursor - values were considered at 1 or more indicies.
   remove_cursor - values were no longer being considered at 1 or more indicies.
   color - values were re-colored at 0 or more indicies.
-- `involved` _List[int]_ - values involved in a change. See GifGenerator.apply_<indentifier>
+- `involved` _List[int]_ - values involved in a change. See GifGenerator.apply\_<indentifier>
   for information on how the invovled list should be used for each identifier.
 
 #### \_\_init\_\_
@@ -191,7 +128,7 @@ class GifStrategy(ABC)
 
 Interface that declares contract for concrete gif strategy classes.
 
-#### generate\_steps
+#### generate_steps
 
 ```python
  | @abstractmethod
@@ -238,7 +175,7 @@ Constructor for GifGenerator class.
 - `strategy` _GifStrategy_ - concrete GifStrategy to be used.
 - `illustrator` _GraphIllustrator_ - concrete GraphIllustrator to be used.
 
-#### generate\_steps
+#### generate_steps
 
 ```python
  | generate_steps(values: List[int]) -> List[Step]
@@ -249,13 +186,12 @@ Delegates work to the GifStrategy and returns the steps used in sorting.
 **Arguments**:
 
 - `values` _List[int]_ - the values to be sorted.
-  
 
 **Returns**:
 
 - `steps` _List[Step]_ - the steps used in sorting.
 
-#### generate\_gif
+#### generate_gif
 
 ```python
  | generate_gif(values: List[int], file_path: str, speed: int) -> None
@@ -274,13 +210,12 @@ Generates a GIF with frames corresponding to the steps taken by the GifGenerator
 
 - `values` - sorts the list in increasing order.
 - `./file_path` - save a gif.
-  
 
 **Returns**:
 
-  None.
+None.
 
-#### generate\_frame
+#### generate_frame
 
 ```python
  | generate_frame(values: List[int], step: Step, frame: Image) -> None
@@ -298,13 +233,12 @@ Edits the frame to display the changes in Step, performs any changes on values.
 
 - `frame` - updated with the changes in step.
 - `values` - values may be changed or moved.
-  
 
 **Returns**:
 
-  None.
+None.
 
-#### change\_dispatch
+#### change_dispatch
 
 ```python
  | change_dispatch(change: Change, values: List[int], draw: ImageDraw) -> None
@@ -322,13 +256,12 @@ Calls the appropriate function for the given change code.
 
 - `values` - values may be changed or moved.
 - `draw` - the image associated with the drawing object is updated with the appropriate changes.
-  
 
 **Returns**:
 
-  None.
+None.
 
-#### apply\_draw
+#### apply_draw
 
 ```python
  | apply_draw(values: List[int], involved: List[int], draw: ImageDraw) -> None
@@ -346,13 +279,12 @@ Draws a bar on the image at involved[0] with value involved[1], updates values a
 
 - `values` - the value at index involved[0] is set to involved[1].
 - `draw` - the bar at index involved[0] is erased and replaced with a bar of value involved[1] on image associated with the drawing object.
-  
 
 **Returns**:
 
-  None.
+None.
 
-#### apply\_overlay
+#### apply_overlay
 
 ```python
  | apply_overlay(values: List[int], involved: List[int], draw: ImageDraw) -> None
@@ -370,13 +302,12 @@ Draws a bar-outline on the image at involved[0] with value involved[1], updates 
 
 - `values` - the value at index involved[0] is set to involved[1].
 - `draw` - a bar outline with value involved[1] is drawn over top of the bar at index involved[0] on image associated with the drawing object.
-  
 
 **Returns**:
 
-  None.
+None.
 
-#### apply\_exchange
+#### apply_exchange
 
 ```python
  | apply_exchange(values: List[int], involved: List[int], draw: ImageDraw) -> None
@@ -393,14 +324,13 @@ Swaps the bars on the image at involved[0] and involved[1], updates values accor
 **Modifies:**
 
 - `values` - the value at index involved[0] is swapped with the value at index invovled[1].
-- `draw` - the bars at index involved[0]  and involved[1] are swapped on image associated with the drawing object.
-  
+- `draw` - the bars at index involved[0] and involved[1] are swapped on image associated with the drawing object.
 
 **Returns**:
 
-  None.
+None.
 
-#### apply\_add\_cursor
+#### apply_add_cursor
 
 ```python
  | apply_add_cursor(values: List[int], involved: List[int], draw: ImageDraw) -> None
@@ -420,9 +350,9 @@ Draws a cursor on the image at every index listed in involved.
 
 **Returns**:
 
-  None.
+None.
 
-#### apply\_remove\_cursor
+#### apply_remove_cursor
 
 ```python
  | apply_remove_cursor(values: List[int], involved: List[int], draw: ImageDraw) -> None
@@ -442,9 +372,9 @@ Erases a cursor on the image at every index listed in involved.
 
 **Returns**:
 
-  None.
+None.
 
-#### apply\_color
+#### apply_color
 
 ```python
  | apply_color(values: List[int], involved: List[int], draw: ImageDraw) -> None
@@ -464,9 +394,9 @@ Re-draws all bars at indicies in involved[1:] on the image with the color specif
 
 **Returns**:
 
-  None.
+None.
 
-#### select\_color
+#### select_color
 
 ```python
  | select_color(code: str) -> (int, int, int)
@@ -477,15 +407,14 @@ Selects the correct color from the GraphIllustrator's ColorProfile based on the 
 **Arguments**:
 
 - `code` _str_ - one of the color options (sorted, fade, or bar).
-  
 
 **Returns**:
 
 - `color` _int, int, int_ - a RGBA color code.
 
-## src.input\_handler
+## src.input_handler
 
-#### select\_color\_profile
+#### select_color_profile
 
 ```python
 select_color_profile(color: str) -> ColorProfile
@@ -496,13 +425,12 @@ Selects the correct color profile.
 **Arguments**:
 
 - `color` _str_ - used to select a preset color profile (red, blue or green).
-  
 
 **Returns**:
 
 - `colors` _ColorProfile_ - An instance of the correct ColorProfile.
 
-#### select\_graph\_strategy
+#### select_graph_strategy
 
 ```python
 select_graph_strategy(code: str) -> GraphStrategy
@@ -513,13 +441,12 @@ Instantiates the correct GraphStrategy.
 **Arguments**:
 
 - `code` _str_ - one of the preset strategy codes.
-  
 
 **Returns**:
 
 - `strategy` _GraphStrategy_ - An instance of the correct GraphStrategy.
 
-#### select\_gif\_strategy
+#### select_gif_strategy
 
 ```python
 select_gif_strategy(code: str) -> GraphStrategy
@@ -530,13 +457,12 @@ Instantiates the correct GifStrategy.
 **Arguments**:
 
 - `code` _str_ - one of the preset strategy codes.
-  
 
 **Returns**:
 
 - `strategy` _GifStrategy_ - An instance of the correct GifStrategy.
 
-#### handle\_input
+#### handle_input
 
 ```python
 handle_input(args) -> None
@@ -554,14 +480,13 @@ Transforms command line inputs into the specififed graph.
 
 **Raises**:
 
-  InputError
-
+InputError
 
 **Returns**:
 
-  None.
+None.
 
-## src.graph\_illustrator
+## src.graph_illustrator
 
 ### ColorProfile
 
@@ -606,7 +531,7 @@ Class for drawing and editing bar graphs.
 **Attributes**:
 
 - `image_width` _int_ - the width of the image in pixels
-- `image_height` _int_ - the  height of the image in pixels
+- `image_height` _int_ - the height of the image in pixels
 - `border_size` _int_ - the width of the border in pixels
 - `num_bars` _int_ - the number of bars in the graph
 - `bar_width` _int_ - the width of a bar in pixels
@@ -627,7 +552,7 @@ Constructor for GraphIllustrator class.
 - `border_size` _int_ - the size of the border.
 - `colors` _ColorProfile_ - RGB color profile for the GraphIllustrator.
 
-#### draw\_cursor
+#### draw_cursor
 
 ```python
  | draw_cursor(position: int, draw: ImageDraw, color: (int, int, int)) -> None
@@ -647,9 +572,9 @@ draws a color cursor on the image at the position.
 
 **Returns**:
 
-  None.
+None.
 
-#### erase\_cursor
+#### erase_cursor
 
 ```python
  | erase_cursor(position: int, draw: ImageDraw) -> None
@@ -668,9 +593,9 @@ Erases the cursor on the image at the position.
 
 **Returns**:
 
-  None.
+None.
 
-#### draw\_bar
+#### draw_bar
 
 ```python
  | draw_bar(position: int, value: int, draw: ImageDraw, color: (int, int, int)) -> None
@@ -692,13 +617,12 @@ Draws a color bar of the correct height on the image at the position.
 **Raises**:
 
 - `InputError` - number of values is too large for the image size.
-  
 
 **Returns**:
 
-  None.
+None.
 
-#### erase\_bar
+#### erase_bar
 
 ```python
  | erase_bar(position: int, draw: ImageDraw) -> None
@@ -717,9 +641,9 @@ Erases the bar on the image at the position.
 
 **Returns**:
 
-  None.
+None.
 
-#### draw\_bars
+#### draw_bars
 
 ```python
  | draw_bars(values: List[int], draw: ImageDraw) -> None
@@ -731,7 +655,6 @@ Draws a bar for each value onto the image.
 
 - `values(List[int])` - the values to be drawn.
 - `draw` _ImageDraw_ - the drawing object.
-  
 
 **Raises**:
 
@@ -743,9 +666,9 @@ Draws a bar for each value onto the image.
 
 **Returns**:
 
-  None.
+None.
 
-#### draw\_border
+#### draw_border
 
 ```python
  | draw_border(draw: ImageDraw) -> None
@@ -763,9 +686,9 @@ Draws a half self.colors.border, half self.colors.background border onto the ima
 
 **Returns**:
 
-  None.
+None.
 
-#### draw\_graph
+#### draw_graph
 
 ```python
  | draw_graph(values: List[int], draw: ImageDraw) -> None
@@ -777,20 +700,21 @@ Draws a bar graph of the values in values
 
 - `values(List[int])` - a list of values.
 - `draw` _ImageDraw_ - the drawing object.
-  
 
 **Raises**:
 
-  InputError:
-  * number of values is too large for the image size.
-  * no values are passed.
+InputError:
 
-  **Modifies:**
+- number of values is too large for the image size.
+- no values are passed.
+
+**Modifies:**
+
 - `draw` - a bar graph is drawn onto the image associated with the drawing object.
 
 **Returns**:
 
-  None.
+None.
 
 ## src.exceptions
 
@@ -822,7 +746,7 @@ Constructor for InputError class.
 - `expression` - input expression in which the error occurred.
 - `message` _str_ - explanation of the error.
 
-## src.graph\_strategy
+## src.graph_strategy
 
 ### GraphStrategy
 
@@ -832,7 +756,7 @@ class GraphStrategy(ABC)
 
 Interface that declares contract for concrete graph strategy classes.
 
-#### generate\_values
+#### generate_values
 
 ```python
  | @abstractmethod
@@ -845,13 +769,12 @@ Generates a list of quantity integers between 0 and maximum inclusive.
 
 - `quantity` _int_ - the number of values to be generated.
 - `maximum` _int_ - the maximum permissible value size.
-  
 
 **Returns**:
 
 - `values(List[int])` - a list of integers.
 
-#### generate\_values
+#### generate_values
 
 ```python
  | generate_values(quantity: int, maximum: int) -> List[int]
@@ -863,13 +786,12 @@ Fufuills the GraphStrategy.generate_values contract.
 
 - `quantity` _int_ - the number of values to be generated.
 - `maximum` _int_ - the maximum permissible value size.
-  
 
 **Returns**:
 
 - `values(List[int])` - a increasing list of integers.
 
-#### generate\_values
+#### generate_values
 
 ```python
  | generate_values(quantity: int, maximum: int) -> List[int]
@@ -881,13 +803,12 @@ Fufuills the GraphStrategy.generate_values contract.
 
 - `quantity` _int_ - the number of values to be generated.
 - `maximum` _int_ - the maximum permissible value size.
-  
 
 **Returns**:
 
 - `values(List[int])` - a decreasing list of integers.
 
-#### generate\_values
+#### generate_values
 
 ```python
  | generate_values(quantity: int, maximum: int) -> List[int]
@@ -899,13 +820,12 @@ Fufuills the GraphStrategy.generate_values contract
 
 - `quantity` _int_ - the number of values to be generated.
 - `maximum` _int_ - the maximum permissible value size.
-  
 
 **Returns**:
 
 - `values(List[int])` - a nearly sorted list of integers.
 
-#### generate\_values
+#### generate_values
 
 ```python
  | generate_values(quantity: int, maximum: int) -> List[int]
@@ -917,13 +837,12 @@ Fufuills the GraphStrategy.generate_values contract
 
 - `quantity` _int_ - the number of values to be generated.
 - `maximum` _int_ - the maximum permissible value size.
-  
 
 **Returns**:
 
 - `values(List[int])` - a list of integers with many repeated values.
 
-#### generate\_values
+#### generate_values
 
 ```python
  | generate_values(quantity: int, maximum: int) -> List[int]
@@ -935,13 +854,12 @@ Fufuills the GraphStrategy.generate_values contract
 
 - `quantity` _int_ - the number of values to be generated.
 - `maximum` _int_ - the maximum permissible value size.
-  
 
 **Returns**:
 
 - `values(List[int])` - a random list of integers.
 
-## src.graph\_generator
+## src.graph_generator
 
 ### GraphGenerator
 
@@ -967,7 +885,7 @@ Constructor for GraphGenerator class.
 
 - `strategy` _GraphStrategy_ - an instance of a concrete GraphStrategy.
 
-#### generate\_graph
+#### generate_graph
 
 ```python
  | generate_graph(quantity: int, illustrator: GraphIllustrator, file_path: str) -> List[int]
@@ -986,18 +904,18 @@ Generates and saves an image of a graph.
 
 **Raises**:
 
-  InputError:
-  - less than 1 value
-  - negative maximum value
-  - illustrator image size less than 1
-  - number of values is too large for the image size
+InputError:
 
+- less than 1 value
+- negative maximum value
+- illustrator image size less than 1
+- number of values is too large for the image size
 
 **Returns**:
 
 - `values` _List[int]_ - the values in the generated graph.
 
-#### create\_graph\_base
+#### create_graph_base
 
 ```python
 create_graph_base(width: (int), height: (int), background_color: (int, int, int)) -> Image
@@ -1010,14 +928,11 @@ Creates a base image to draw a graph on.
 - `width` _int_ - the width of the image in pixels.
 - `height` _int_ - the width of the image in pixels.
 - `background_color` _str_ - the RGBA color code for the background.
-  
 
 **Raises**:
 
 - `InputError` - image size less than 1.
-  
 
 **Returns**:
 
 - `base` _Image_ - the base for the graph.
-

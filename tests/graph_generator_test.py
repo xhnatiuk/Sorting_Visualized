@@ -6,7 +6,9 @@ from tests.image_testing import compare_images, COLORS
 OUTPUT_FILEPATH = "./out/images/tests/graph_generator/"
 REFERENCE_FILEPATH = "./tests/images/graph_generator/"
 
+
 class TestCreateGraphBase:
+
     def helper(self, test_name: str, width: int, height: int):
         fp_actual = OUTPUT_FILEPATH + "base_" + test_name + ".png"
         fp_expected = REFERENCE_FILEPATH + "base_" + test_name + ".png"
@@ -34,33 +36,40 @@ class TestCreateGraphBase:
         except InputError:
             assert True
 
+
 class MockEmptyStrategy(GraphStrategy):
+
     def generate_values(self, quantity, maximum):
         return []
 
+
 class MockSimpleStrategy(GraphStrategy):
+
     def generate_values(self, quantity, maximum):
         output = []
         for i in range(quantity):
             output.append(maximum)
         return output
 
+
 class TestGenerateGraph:
     simple_quantity = 10
-    simple_illustrator = GraphIllustrator(simple_quantity, (250, 250), 10, COLORS)
+    simple_illustrator = GraphIllustrator(simple_quantity, (250, 250), 10,
+                                          COLORS)
 
-    def helper(self, test_name: str, quantity: int, strategy: GraphStrategy, 
-    illustrator: GraphIllustrator):
+    def helper(self, test_name: str, quantity: int, strategy: GraphStrategy,
+               illustrator: GraphIllustrator):
         fp_actual = OUTPUT_FILEPATH + "" + test_name + ".png"
         fp_expected = REFERENCE_FILEPATH + "" + test_name + ".png"
         fp_function = OUTPUT_FILEPATH + test_name
         generator = GraphGenerator(strategy)
         generator.generate_graph(quantity, illustrator, fp_function)
         compare_images(fp_actual, fp_expected)
-    
+
     # for tests that will have different outputs depending on random seed
-    def helper_no_compare(self, test_name: str, quantity: int, strategy: GraphStrategy, 
-    illustrator: GraphIllustrator):
+    def helper_no_compare(self, test_name: str, quantity: int,
+                          strategy: GraphStrategy,
+                          illustrator: GraphIllustrator):
         fp_function = OUTPUT_FILEPATH + test_name
         generator = GraphGenerator(strategy)
         generator.generate_graph(quantity, illustrator, fp_function)
@@ -79,14 +88,14 @@ class TestGenerateGraph:
         strategy = Decreasing()
         illustrator = self.simple_illustrator
         self.helper(test_name, quantity, strategy, illustrator)
-    
+
     def test_nearly_sorted(self):
-        test_name =  "nearly_sorted"
+        test_name = "nearly_sorted"
         quantity = self.simple_quantity
         strategy = NearlySorted()
         illustrator = self.simple_illustrator
         self.helper_no_compare(test_name, quantity, strategy, illustrator)
-    
+
     def test_few_unique(self):
         test_name = "few_unique"
         quantity = self.simple_quantity
@@ -100,13 +109,13 @@ class TestGenerateGraph:
         strategy = Random()
         illustrator = self.simple_illustrator
         self.helper_no_compare(test_name, quantity, strategy, illustrator)
-    
+
     def test_empty(self):
         test_name = "mock_empty"
         quantity = self.simple_quantity
         strategy = MockEmptyStrategy()
         illustrator = self.simple_illustrator
-        try: 
+        try:
             self.helper(test_name, quantity, strategy, illustrator)
             assert False
         except InputError:
@@ -124,7 +133,7 @@ class TestGenerateGraph:
         quantity = 0
         strategy = MockSimpleStrategy()
         illustrator = self.simple_illustrator
-        try: 
+        try:
             self.helper(test_name, quantity, strategy, illustrator)
             assert False
         except InputError:
@@ -142,7 +151,7 @@ class TestGenerateGraph:
         quantity = self.simple_quantity
         strategy = MockEmptyStrategy()
         illustrator = GraphIllustrator(quantity, (250, 250), 126, COLORS)
-        try: 
+        try:
             self.helper(test_name, quantity, strategy, illustrator)
             assert False
         except InputError:
@@ -160,13 +169,11 @@ class TestGenerateGraph:
         quantity = self.simple_quantity
         strategy = Increasing()
         illustrator = GraphIllustrator(quantity, (58, 100), 50, COLORS)
-        try: 
+        try:
             self.helper(test_name, quantity, strategy, illustrator)
             assert False
         except InputError:
             assert True
-
-
 
 
 """

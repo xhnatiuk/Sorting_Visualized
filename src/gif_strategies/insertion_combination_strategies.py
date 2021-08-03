@@ -1,7 +1,9 @@
 from typing import List
-from src.gif_generator import GifStrategy, Step, Change
+from src.gif_generator import GifStrategy, Step
+
 
 class PatienceSort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Patience Sort
@@ -16,7 +18,9 @@ class PatienceSort(GifStrategy):
         """
         return NotImplementedError
 
+
 class BlockSort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Block Sort
@@ -31,7 +35,9 @@ class BlockSort(GifStrategy):
         """
         return NotImplementedError
 
+
 class Timsort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Timsort

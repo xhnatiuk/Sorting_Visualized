@@ -1,7 +1,9 @@
 from typing import List
 from src.gif_generator import GifStrategy, Step, Change
 
+
 class SelectionSort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Selection Sort
@@ -13,11 +15,11 @@ class SelectionSort(GifStrategy):
             steps (List[Step]): the steps used in sorting.
         """
         steps = []
-        for i in range (len(values)):
+        for i in range(len(values)):
             steps.append(Step(i))
             # set the next unsorted value as the min
             minimum_index = i
-            for j in range (i+1, len(values)):
+            for j in range(i + 1, len(values)):
                 steps.append(Step(j))
                 # if some value is smaller than the min, update the min
                 if values[minimum_index] > values[j]:
@@ -29,7 +31,9 @@ class SelectionSort(GifStrategy):
             steps.append(Step(i, [exchange, sort]))
         return steps
 
+
 class Heapsort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Heapsort
@@ -44,7 +48,9 @@ class Heapsort(GifStrategy):
         """
         return NotImplementedError
 
+
 class Smoothsort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Smoothsort
@@ -61,6 +67,7 @@ class Smoothsort(GifStrategy):
 
 
 class Strandsort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Strandsort
@@ -75,7 +82,9 @@ class Strandsort(GifStrategy):
         """
         return NotImplementedError
 
+
 class TournamentSort(GifStrategy):
+
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Fufuills the GifStrategy.generate_steps contract using Tournament Sort
