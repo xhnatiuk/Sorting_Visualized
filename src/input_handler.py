@@ -1,5 +1,5 @@
 from .graph_illustrator import ColorProfile, GraphIllustrator
-from .graph_strategy import *
+from .graph_strategy import GraphStrategy, Increasing, Decreasing, NearlySorted, FewUnique, Random
 from .gif_strategies.selection_strategies import SelectionSort
 from .gif_strategies.insertion_strategies import InsertionSort
 from .gif_strategies.exchanging_strategies import BubbleSort, CocktailSort, CombSort, OddEvenSort, GnomeSort

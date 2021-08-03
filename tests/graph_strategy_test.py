@@ -1,5 +1,5 @@
 from typing import List
-from src.graph_strategy import *
+from src.graph_strategy import Decreasing, FewUnique, GraphStrategy, Increasing, NearlySorted, Random
 
 
 def simple(strategy: GraphStrategy, expected: List[int]):

@@ -6,10 +6,10 @@ from PIL import Image, ImageDraw
 
 class Change:
     """
-    Class for defining changes that have taken place during sorting. 
+    Class for defining changes that have taken place during sorting.
 
-    Attributes: 
-        indentifier (str): the indentifier of a change. Identifiers: 
+    Attributes:
+        indentifier (str): the indentifier of a change. Identifiers:
                 draw - a value at a single index was changed.
                 overlay - a value at a single index will be changed.
                 exchange - values at two different indicies were swapped.
@@ -31,8 +31,8 @@ class Change:
 
         Args:
             identifier (str): the indentifier of the change applied.
-            involved (List[int]): values involved in the change. 
-            
+            involved (List[int]): values involved in the change.
+
         """
         self.indentifier = indentifier
         self.involved = involved
@@ -72,13 +72,13 @@ class GifStrategy(ABC):
     def generate_steps(self, values: List[int]) -> List[Step]:
         """
         Sorts the values and returns a list of the steps used.
-        
+
         Args:
             values (List[int]): the values to be sorted.
 
         Modifies:
             values: sorts the list in increasing order.
-            
+
         Returns:
             steps(List[Step]): the list of steps used.
         """
@@ -136,7 +136,7 @@ class GifGenerator():
             based off of is stored,
                 and where the gif willl be stored.
             speed (int): the duration of each frame in centiseconds.
-        
+
         Modifies:
             values: sorts the list in increasing order.
             ./file_path: save a gif.
@@ -181,7 +181,7 @@ class GifGenerator():
             frame: updated with the changes in step.
             values: values may be changed or moved.
 
-        Returns: 
+        Returns:
             None.
         """
         draw = ImageDraw.Draw(frame)
@@ -299,7 +299,7 @@ class GifGenerator():
     def apply_add_cursor(self, values: List[int], involved: List[int],
                          draw: ImageDraw) -> None:
         """
-        Draws a cursor on the image at every index listed in involved. 
+        Draws a cursor on the image at every index listed in involved.
 
         Args:
             values (List[int]): the list of values displayed in frame.

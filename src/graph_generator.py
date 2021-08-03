@@ -27,7 +27,7 @@ class GraphGenerator():
                        file_path: str) -> List[int]:
         """
         Generates and saves an image of a graph.
-       
+
         Args:
             quantity (int): the number of bars on the graph.
             illustrator (Illustrator): the illistrator instance for the graph
@@ -70,7 +70,7 @@ def create_graph_base(width: (int), height: (int),
                       background_color: Tuple[int, int, int]) -> Image:
     """
     Creates a base image to draw a graph on.
-   
+
     Args:
         width (int): the width of the image in pixels.
         height (int): the width of the image in pixels.

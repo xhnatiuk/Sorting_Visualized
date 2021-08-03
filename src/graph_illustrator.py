@@ -122,7 +122,7 @@ class GraphIllustrator:
         Args:
             position (int): the index of the cursor.
             draw (ImageDraw): the drawing object.
-        
+
         Modifies:
             draw: a cursor is erased from the image associated with the
             drawing object.
@@ -229,7 +229,7 @@ class GraphIllustrator:
 
         Raises:
             InputError: number of values is too large for the image size.
-        
+
         Modifies:
             draw: a bar is drawn onto the image associated with the drawing
             object for each value in values.
@@ -247,7 +247,7 @@ class GraphIllustrator:
 
         Args:
             draw (ImageDraw): the drawing object.
-            
+
         Modifies:
             draw: a border is drawn onto the image associated with the drawing
             object.

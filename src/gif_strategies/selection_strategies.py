@@ -43,7 +43,7 @@ class Heapsort(GifStrategy):
 
         Returns:
             steps (List[Step]): the steps used in sorting.
-        
+
         TODO: implement
         """
         return NotImplementedError

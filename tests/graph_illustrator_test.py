@@ -9,6 +9,7 @@ REFERENCE_FILEPATH = "./tests/images/graph_illustrator/"
 
 
 class TestDrawCursor:
+
     def helper(self, test_name: str, position: int):
         values = [230, 230, 230, 230, 230]
         size = (250, 250)
@@ -53,6 +54,7 @@ class TestDrawCursor:
 
 
 class TestEraseCursor:
+
     def helper(self, test_name: str, position: int):
         values = [230, 230, 230, 230, 230]
         size = (250, 250)
@@ -101,6 +103,7 @@ class TestEraseCursor:
 
 
 class TestDrawBar:
+
     def helper(self, test_name: str, position: int, value: int):
         values = [230, 230, 230, 230, 230, 230, 230, 230, 230, 230]
         size = (250, 250)
@@ -157,6 +160,7 @@ class TestDrawBar:
 
 
 class TestEraseBar:
+
     def helper(self, test_name: str, position: int):
         values = [230, 230, 230, 230, 230, 230, 230, 230, 230, 230]
         size = (250, 250)
@@ -205,6 +209,7 @@ class TestEraseBar:
 
 
 class TestDrawBars:
+
     def helper(self, test_name: str, values: List[int]):
         size = (250, 250)
         border_width = 10
@@ -242,6 +247,7 @@ class TestDrawBars:
 
 
 class TestDrawBorder:
+
     def helper(self, test_name: str, size: Tuple[int, int], border_width: int):
         values = [1]
         fp_actual = OUTPUT_FILEPATH + "border/" + test_name + ".png"
@@ -294,6 +300,7 @@ class TestDrawBorder:
 
 
 class TestDrawGraph:
+
     def draw_graph_test_helper(self, file_name: str, values: List[int],
                                image_size: Tuple[int, int]):
         fp_actual = OUTPUT_FILEPATH + "graph/" + file_name + ".png"
