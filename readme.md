@@ -1,3 +1,61 @@
+# Examples
+
+## Bubble Sort
+
+![bubble decreasing](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/bubble_decreasing.gif)
+![bubble few unique](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/bubble_few_unique.gif)
+![bubble nearly sorted](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/bubble_nearly_sorted.gif)
+![bubble random](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/bubble_random.gif)
+
+## Cocktail Sort
+
+![cocktail decreasing](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/cocktail_decreasing.gif)
+![cocktail few unique](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/cocktail_few_unique.gif)
+![cocktail nearly sorted](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/cocktail_nearly_sorted.gif)
+![cocktail random](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/cocktail_random.gif)
+
+## Comb Sort
+
+![comb decreasing](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/comb_decreasing.gif)
+![comb few unique](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/comb_few_unique.gif)
+![comb nearly sorted](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/comb_nearly_sorted.gif)
+![comb random](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/comb_random.gif)
+
+## Gnome Sort
+
+![gnome decreasing](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/gnome_decreasing.gif)
+![gnome few unique](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/gnome_few_unique.gif)
+![gnome nearly sorted](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/gnome_nearly_sorted.gif)
+![gnome random](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/gnome_random.gif)
+
+## Insertion Sort
+
+![insertion decreasing](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/insertion_decreasing.gif)
+![insertion few unique](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/insertion_few_unique.gif)
+![insertion nearly sorted](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/insertion_nearly_sorted.gif)
+![insertion random](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/insertion_random.gif)
+
+## Merge Sort
+
+![merge decreasing](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/merge_decreasing.gif)
+![merge few unique](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/merge_few_unique.gif)
+![merge nearly sorted](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/merge_nearly_sorted.gif)
+![merge random](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/merge_random.gif)
+
+## Odd Even Sort
+
+![odd even decreasing](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/odd_even_decreasing.gif)
+![odd even few unique](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/odd_even_few_unique.gif)
+![odd even nearly sorted](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/odd_even_nearly_sorted.gif)
+![odd even random](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/odd_even_random.gif)
+
+## Selection Sort
+
+![selection decreasing](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/selection_decreasing.gif)
+![selection few unique](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/selection_few_unique.gif)
+![selection nearly sorted](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/selection_nearly_sorted.gif)
+![selection random](https://github.com/xhnatiuk/Sorting_Visualized/raw/master/tests/images/gif_generator/selection_random.gif)
+
 # CLI GIF Generator
 
 A command line python app for generating bar chart graph visualizations of sorting algorithms.
@@ -5,8 +63,8 @@ A command line python app for generating bar chart graph visualizations of sorti
 how to use:
 
 1. navigate to the root folder (sorting_visualized)
-2. run `python3 ./main algorithim`
-3. find output in ./out/images
+2. run `python ./main.py <algorithim>`
+3. find output in ./gif.gif
 
 ## Positional Arguments
 
